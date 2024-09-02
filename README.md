@@ -5,13 +5,13 @@
 
 `DISCIPLINA: Trabalho Interdisciplinar Desenvolvimento de Aplicação Interativa`
 
-`Xº semestre/ANO`
+`3º semestre/ANO`
 
-Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
+O projeto tem como objetivo desenvolver uma Urna Eletrônica Digital que permitirá a realização de processos seletivos de votação de forma segura e eficiente. A plataforma poderá ser acessada por indivíduos que se candidatem e participem de eleições, assim como que eleitores votem em seus candidatos de maneira simples e organizada. Para se candidatar, os interessados deverão realizar um cadastro, informando seu nome completo e escolhendo um número de candidatura
 
 ## Integrantes
 
-* Nome completo do aluno 1
+* Rafael Brandão Silva
 * Nome completo do aluno 2
 * Nome completo do aluno 3
 * Nome completo do aluno 4
