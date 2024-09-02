@@ -1,46 +1,45 @@
 # Introdução
 
-Texto descritivo com a visão geral do projeto abordado. Inclui o contexto, o problema, os objetivos, a justificativa e o público-alvo do projeto.
+No cenário atual, a digitalização de processos é uma tendência crescente, impulsionada pela busca por eficiência, segurança e transparência. Nesse contexto, a Urna Eletrônica Digital surge como uma solução inovadora para a realização de processos seletivos de votação. Este projeto tem como objetivo desenvolver uma plataforma digital que permita a candidatura de indivíduos e a participação de eleitores em eleições de forma prática e organizada. A plataforma garantirá que os candidatos possam se inscrever e que os eleitores possam votar com segurança, utilizando um sistema de cadastro que assegura a autenticidade e a organização dos votos por unidade da PUC. A introdução de uma ferramenta como essa visa não apenas modernizar o processo de votação, mas também promover a confiança e a clareza em cada etapa do processo eleitoral.
 
 ## Problema
-Aqui, a equipe deve fornecer uma descrição detalhada do problema a ser resolvido. Não é o momento adequado para abordar questões técnicas relacionadas ao desenvolvimento da aplicação. O objetivo é compreender e comunicar de maneira precisa qual é o desafio ou necessidade que motiva a criação da aplicação.
 
-Descreva também o contexto em que essa aplicação será usada, se  houver: empresa, tecnologias, etc. Novamente, descreva apenas o que de fato existir, pois ainda não é a hora de apresentar requisitos detalhados ou projetos.
-
-O grupo pode optar por fazer uso de ferramentas como Design Thinking, que permite uma visão completa do problema.
-
-> **Links úteis**:
-> - [Objetivos, problema de pesquisa e justificativa](https://medium.com/@versioparole/objetivos-problema-de-pesquisa-e-justificativa-c98c8233b9c3)
-> - [Matriz certezas, suposições e dúvidas](https://medium.com/educa%C3%A7%C3%A3o-fora-da-caixa/matriz-certezas-suposi%C3%A7%C3%B5es-e-d%C3%BAvidas-fa2263633655)
-> - [Brainstorming](https://www.euax.com.br/2018/09/brainstorming/)
+O desinteresse dos alunos em participar das eleições para líder de turma tem sido um desafio crescente em nossa Universidade. A falta de engajamento nas votações e a ausência de uma plataforma moderna e acessível contribuíram para a baixa participação. Este cenário motivou a criação de uma urna eletrônica personalizada para nossa instituição, visando tornar o processo eleitoral mais prático, inclusivo e atrativo. Acreditamos que, ao utilizar uma tecnologia que os alunos já estão familiarizados, poderemos incentivar uma maior participação e, assim, fortalecer a representatividade dentro das turmas.
 
 ## Objetivos
 
-Aqui, você deve descrever os objetivos do trabalho, indicando que o objetivo geral é desenvolver um software para solucionar o problema apresentado acima.
+Desenvolver e implementar uma urna eletrônica personalizada para as eleições de líder de turma na Universidade, com o intuito de aumentar a participação dos alunos no processo eleitoral, tornando-o mais acessível, prático e atraente, e, assim, promover uma maior representatividade estudantil.
 
-Além disso, apresente alguns (pelo menos 3) objetivos específicos, dependendo de onde você pretende concentrar sua prática investigativa ou como deseja aprofundar seu trabalho.
- 
-> **Links úteis**:
-> - [Objetivo geral e objetivo específico: como fazer e quais verbos utilizar](https://blog.mettzer.com/diferenca-entre-objetivo-geral-e-objetivo-especifico/)
+Os objetivos específicos são:
+
+### Objetivos específicos são:
+
+a)Analisar o nível de engajamento atual dos alunos nas eleições para líder de turma, identificando os principais fatores que contribuem para o desinteresse.
+
+b)Projetar uma interface de urna eletrônica intuitiva e acessível, levando em consideração as preferências e necessidades dos alunos, visando maximizar a usabilidade e a adesão ao processo de votação.
+c)Implementar e testar a urna eletrônica em um ambiente controlado, avaliando sua eficácia em aumentar a participação dos alunos nas eleições e a precisão dos resultados.
+
+d)Comparar os resultados da participação e engajamento dos alunos antes e após a implementação da urna eletrônica, identificando as melhorias e propondo ajustes futuros com base nas avaliações e feedbacks recebidos.
+
+e)Desenvolver um sistema de segurança que assegure a integridade e confidencialidade dos votos, prevenindo fraudes e garantindo a transparência do processo eleitoral.
+
+f)Promover campanhas de conscientização e orientação sobre a importância da participação nas eleições e sobre o uso da nova urna eletrônica, visando educar os alunos sobre seu papel na escolha do líder de turma e incentivar uma maior participação.
 
 ## Justificativa
 
-Descreva a importância ou a motivação para trabalhar com esta aplicação que você escolheu. Indique as razões pelas quais você escolheu seus objetivos específicos ou as razões para aprofundar em certos aspectos do software.
+A necessidade de reverter o crescente desinteresse dos alunos nas eleições para líder de turma, um processo essencial para a representatividade e organização acadêmica. A baixa participação tem comprometido a legitimidade das escolhas, resultando em lideranças que não refletem de forma adequada as necessidades e expectativas dos estudantes.
 
-O grupo de trabalho pode fazer uso de questionários, entrevistas e dados estatísticos, que podem ser apresentados, com o objetivo de esclarecer detalhes do problema que será abordado pelo grupo.
+A criação de uma urna eletrônica personalizada para nossa Universidade é uma solução tecnológica que visa tornar o processo eleitoral mais acessível, prático e atraente. Além de facilitar a votação, a urna eletrônica promoverá a inclusão de mais alunos no processo, ao proporcionar uma interface moderna e familiar.
 
-> **Links úteis**:
-> - [Como montar a justificativa](https://guiadamonografia.com.br/como-montar-justificativa-do-tcc/)
+A principal contribuição deste trabalho será o aumento da participação dos alunos nas eleições, fortalecendo a representatividade e engajamento estudantil. Além disso, o projeto poderá servir como modelo para outras instituições que enfrentam desafios semelhantes, promovendo uma cultura de participação ativa e democrática dentro do ambiente acadêmico.
 
 ## Público-alvo
 
-Descreva quem serão as pessoas que usarão a sua aplicação indicando os diferentes perfis. O objetivo aqui não é definir quem serão os clientes ou quais serão os papéis dos usuários na aplicação. A ideia é, dentro do possível, conhecer um pouco mais sobre o perfil dos usuários: conhecimentos prévios, relação com a tecnologia, relações
-hierárquicas, etc.
+A)Alunos de Graduação
+Acompanhamento de Notas e Presenças
 
-Adicione informações sobre o público-alvo por meio de uma descrição textual, diagramas de personas e mapa de stakeholders.
+B)Alunos de Pós-Graduação
+Gestão de Pesquisas e Referências Bibliográficas
 
-> **Links úteis**:
-> - [Público-alvo](https://blog.hotmart.com/pt-br/publico-alvo/)
-> - [Como definir o público-alvo](https://exame.com/pme/5-dicas-essenciais-para-definir-o-publico-alvo-do-seu-negocio/)
-> - [Público-alvo: o que é, tipos, como definir seu público e exemplos](https://klickpages.com.br/blog/publico-alvo-o-que-e/)
-> - [Qual a diferença entre público-alvo e persona?](https://rockcontent.com/blog/diferenca-publico-alvo-e-persona/)
+C) Alunos de Extensão e Cursos Livres
+Acesso Rápido a Materiais de Curso
