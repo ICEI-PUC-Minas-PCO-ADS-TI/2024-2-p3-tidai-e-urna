@@ -35,11 +35,14 @@ A principal contribuição deste trabalho será o aumento da participação dos 
 
 ## Público-alvo
 
-A)Alunos de Graduação
-Acompanhamento de Notas e Presenças
+**Geral:**
 
-B)Alunos de Pós-Graduação
-Gestão de Pesquisas e Referências Bibliográficas
+O público alvo de nossa aplicação são os alunos e o corpo docente da PUC Minas, visando facilitar os processos de eleição/escolha dos representantes de turma e de curso tanto para os alunos quanto para os coordenadores e membros do diretório acadêmico. Por meio dela, os alunos poderão logar em seus perfis e votarem no candidato de sua escolha nas eleições disponíveis, enquanto os coordenadores e membros do diretório acadêmico poderão acompanhar e coordenar os processos eleitorais de forma segura e transparente.
 
-C) Alunos de Extensão e Cursos Livres
-Acesso Rápido a Materiais de Curso
+**Específico:**
+
+Alunos de graduação do primeiro ao penúltimo período de curso da PUC Minas interessados em escolher e/ou se candidatar a representante de turma ou curso
+
+Coordenadores e membros do diretório acadêmico dos cursos de graduação da PUC Minas com interesse em definir de forma simples e segura os representantes discentes de seus respectivos cursos 
+
+

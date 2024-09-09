@@ -47,20 +47,20 @@ As tabelas a seguir apresentam os requisitos funcionais e não funcionais que de
 
 | ID     | Descrição do Requisito                                                                               | Prioridade |
 | ------ | ---------------------------------------------------------------------------------------------------- | ---------- |
-| RF-001 | deve possuir uma página inicial                                                                      | ALTA       |
-| RF-002 | Deve possuir uma página de login                                                                     | MÉDIA      |
-| RF-003 | Deve possuir uma página de cadastro de usuario                                                       | MÉDIA      |
-| RF-004 | Deve possuir uma pagina para cadastro de votação                                                     | MÉDIA      |
+| RF-001 | deve possuir uma página inicial                                                                      | MÉDIA      |
+| RF-002 | Deve possuir uma página de login                                                                     | ALTA       |
+| RF-003 | Deve possuir uma página de cadastro de usuario                                                       | ALTA       |
+| RF-004 | Deve possuir uma pagina para cadastro de votação                                                     | ALTA       |
 | RF-005 | Deve possuir uma menssagem de confirmação na tela de votação                                         | MÉDIA      |
 | RF-006 | Deve permiter correção de voto                                                                       | MÉDIA      |
-| RF-007 | Deve ter um comprovante de voto                                                                      | MÉDIA      |
-| RF-008 | Deve contabilizar os votos de cada candidato                                                         | MÉDIA      |
-| RF-009 | Deve emitir ao final de cada eleição o vencendor com a quantidade de votos                           | MÉDIA      |
+| RF-007 | Deve ter um comprovante de voto                                                                      | BAIXA      |
+| RF-008 | Deve contabilizar os votos de cada candidato                                                         | ALTA       |
+| RF-009 | Deve emitir ao final de cada eleição o vencendor com a quantidade de votos                           | ALTA       |
 | RF-010 | Deve possuir uma tela com informações da quantidade de votos                                         | MÉDIA      |
 | RF-011 | Deve possuir uma tela com informações de todos os candidatos disponiveis para a votação              | MÉDIA      |
-| RF-012 | O sistema deve poder selecionar um candidato                                                         | MÉDIA      |
+| RF-012 | O sistema deve poder selecionar um candidato                                                         | ALTA       |
 | RF-013 | O sistema deve impedir mais de um voto durante a mesma votação                                       | MÉDIA      |
-| RF-014 | O sistema deve permitir exclusão ou adição de candidaturas antes de se iniciar o processo de votação | MÉDIA      |
+| RF-014 | O sistema deve permitir exclusão ou adição de candidaturas antes de se iniciar o processo de votação | ALTA       |
 | RF-015 | O sitema deve atualizar em tempo real a lista de cadidatos                                           | MÉDIA      |
 
 ### Requisitos não funcionais
@@ -69,13 +69,13 @@ As tabelas a seguir apresentam os requisitos funcionais e não funcionais que de
 | ------- | ------------------------------------------------------------------------------------------------------------- | ---------- |
 | RNF-001 | Deve ser de fácil utilização                                                                                  | MÉDIA      |
 | RNF-002 | Deve ter acessibilidade                                                                                       | BAIXA      |
-| RNF-003 | Deve ser segura                                                                                               | BAIXA      |
-| RNF-004 | Deve ter controles de acesso para permitir que apenas usuários autorizados possam acessar funções específicas | BAIXA      |
-| RNF-005 | Deve estar disponível 24/7 durante o período de votação                                                       | BAIXA      |
-| RNF-006 | Os registros dos votos devem ser persistentes                                                                 | BAIXA      |
+| RNF-003 | Deve ser segura                                                                                               | ALTA       |
+| RNF-004 | Deve ter controles de acesso para permitir que apenas usuários autorizados possam acessar funções específicas | MÉDIA      |
+| RNF-005 | Deve estar disponível 24/7 durante o período de votação                                                       | ALTA       |
+| RNF-006 | Os registros dos votos devem ser persistentes                                                                 | ALTA       |
 | RNF-007 | O tempo de resposta para as ações dos usuários não deve passar de 3s                                          | BAIXA      |
 | RNF-008 | O sistema deve ter robustez                                                                                   | BAIXA      |
-| RNF-009 | O sistema deve ser seguro e transparente                                                                      | BAIXA      |
+| RNF-009 | O sistema deve ser seguro e transparente                                                                      | ALTA       |
 | RNF-010 | O sistema deve ser responsivo                                                                                 | BAIXA      |
 
 ## Restrições
