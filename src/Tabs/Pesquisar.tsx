@@ -1,18 +1,18 @@
-import { Text, VStack } from "native-base";
-import { ImageBackground, StyleSheet } from "react-native";
-
-export default function Perfil() {
+import { StyleSheet, ImageBackground, Linking } from "react-native";
+import { VStack, Text } from "native-base";
+export default function Pesquisar() {
   return (
     <ImageBackground
       source={require("../assets/backGround.png")}
       style={styles.backgroundImage}
     >
       <VStack>
-        <Text>Pagina Perfil</Text>
+        <Text>Pagina de Pesquisar</Text>
       </VStack>
     </ImageBackground>
   );
 }
+
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
