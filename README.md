@@ -12,7 +12,7 @@ O projeto tem como objetivo desenvolver uma Urna Eletrônica Digital que permiti
 ## Integrantes
 
 * Rafael Brandão Silva
-* Nome completo do aluno 2
+* Rhillary Pawany Souza Carvalho
 * Nome completo do aluno 3
 * Nome completo do aluno 4
 * Nome completo do aluno 5
