@@ -1,22 +1,46 @@
 
 # Projeto de interface
 
-<span style="color:red">Pré-requisitos: <a href="02-Especificacao.md"> Especificação do projeto</a></span>
+**Tela de inicio:
 
-Visão geral da interação do usuário pelas telas do sistema e protótipo interativo das telas com as funcionalidades que fazem parte do sistema (wireframes).
+![Tela Inicial](images/tela_inicio.PNG)
 
- Apresente as principais interfaces da plataforma. Discuta como ela foi elaborada de forma a atender os requisitos funcionais, não funcionais e histórias de usuário abordados na <a href="02-Especificacao.md"> Especificação do projeto</a></span>.
+**Tela Login Usuário:
+
+![Tela de Login](images/tela_login.PNG)
+
+**Tela Cadastro de Usuário:
+
+![Tela de Cadastro](images/tela_cadastro_usuario.PNG)
+
+**Tela de Perfil Estudante:
+
+![Tela Perfil Estudante](images/tela_perfil_usuario_comum.PNG)
+
+**Tela de Votação:
+
+![Tela Votação](images/tela_votacao.PNG)
+
+**Tela Perfil Coordenador/Administrador:
+
+![Tela Perfil Coordenador](images/tela_perfil_coordenador.PNG)
+
+**Tela Cadastro e Edição de Pleito (votação):
+
+![Tela cadastro e edição de pleito](images/tela_cadastro_pleito.PNG)
+
+**Tela Cadastro e Edição de candidato:
+
+![Tela cadastro e edição de candidato](images/tela_cadastro_candidato.PNG)
+
+**Tela de Acompanhamento da(s) Votação(ões):
+
+![Tela acompanhamento votação](images/tela_acompanhamento_votacao.PNG)
 
  ## User flow
 
-Fluxo de usuário (user flow) é uma técnica que permite ao desenvolvedor mapear todo o fluxo de navegação do usuário na aplicação. Essa técnica serve para alinhar os caminhos e as possíveis ações que o usuário pode realizar junto com os membros da equipe.
+![Fluxo de telas](images/wireframes_e_fluxo_de_telas_eurna.PNG)
 
-![Exemplo de user flow](images/wireframesefluxodetelase-urna.PNG)
-
-> **Links úteis**:
-> - [User flow: o quê é e como fazer?](https://medium.com/7bits/fluxo-de-usu%C3%A1rio-user-flow-o-que-%C3%A9-como-fazer-79d965872534)
-> - [User flow vs site maps](http://designr.com.br/sitemap-e-user-flow-quais-as-diferencas-e-quando-usar-cada-um/)
-> - [Top 25 user flow tools & templates for smooth](https://www.mockplus.com/blog/post/user-flow-tools)
 
 ### Diagrama de fluxo
 
