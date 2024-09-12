@@ -18,6 +18,7 @@ import { useState } from "react";
 import { Botao } from "../Componentes/Botao/Botao";
 import { secoes } from "../utils/Cadastro";
 import { Props } from "../router/TypesRoutes";
+import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
 
 export function Cadastro({ navigation }: Props) {
   const [numSecao, setNumSecao] = useState(0);
@@ -33,79 +34,68 @@ export function Cadastro({ navigation }: Props) {
   }
 
   return (
-    <ImageBackground
-      source={require("../assets/backGround.png")}
-      style={styles.backgroundImage}
-    >
-      <VStack flex={1} justifyContent="start" alignItems={""} p={4}>
-        <Image style={styles.logoImage} source={Logo} alt="Logo E-Urna" />
-        <VStack
-          marginTop={2}
-          flex={1}
-          justifyContent={"start"}
-          alignItems={"center"}
-        >
-          <Box alignItems={"center"} justifyContent={"center"} height={"90%"}>
-            <Titulo>{secoes[numSecao].titulo}</Titulo>
-            <Box padding={5} style={styles.box}>
-              {secoes[numSecao].entradaTexto.map((entrada) => {
+    <ImagemFundo>
+      <VStack
+        marginTop={2}
+        flex={1}
+        justifyContent={"start"}
+        alignItems={"center"}
+      >
+        <Box alignItems={"center"} justifyContent={"center"} height={"90%"}>
+          <Titulo>{secoes[numSecao].titulo}</Titulo>
+          <Box padding={5} style={styles.box}>
+            {secoes[numSecao].entradaTexto.map((entrada) => {
+              return (
+                <EntradaDeTexto
+                  label={entrada.label}
+                  placeholder={entrada.placeholder}
+                  key={entrada.id}
+                />
+              );
+            })}
+            {numSecao == 2 &&
+              secoes[2].checkbox.map((check) => {
                 return (
-                  <EntradaDeTexto
-                    label={entrada.label}
-                    placeholder={entrada.placeholder}
-                    key={entrada.id}
-                  />
+                  <Checkbox key={check.id} value={check.value}>
+                    {check.value}
+                  </Checkbox>
                 );
               })}
-              {numSecao == 2 &&
-                secoes[2].checkbox.map((check) => {
-                  return (
-                    <Checkbox key={check.id} value={check.value}>
-                      {check.value}
-                    </Checkbox>
-                  );
-                })}
-              <Box
-                marginTop={3}
-                alignItems={"center"}
-                width={"100%"}
-                padding={2}
-              >
-                <Stack space={4} width={"75%"}>
-                  <Botao
+            <Box marginTop={3} alignItems={"center"} width={"100%"} padding={2}>
+              <Stack space={4} width={"75%"}>
+                <Botao
+                  borderRadius={40}
+                  _text={{ fontSize: "lg" }}
+                  bg={"teal.500"}
+                  onPress={() => avanacarSecao()}
+                >
+                  Próximo
+                </Botao>
+                {numSecao > 0 ? (
+                  <Button
                     borderRadius={40}
                     _text={{ fontSize: "lg" }}
-                    bg={"teal.500"}
-                    onPress={() => avanacarSecao()}
+                    bg={"green.500"}
+                    onPress={() => voltarSesao()}
                   >
-                    Próximo
-                  </Botao>
-                  {numSecao > 0 ? (
-                    <Button
-                      borderRadius={40}
-                      _text={{ fontSize: "lg" }}
-                      bg={"green.500"}
-                      onPress={() => voltarSesao()}
-                    >
-                      Voltar
-                    </Button>
-                  ) : (
-                    <Button
-                      borderRadius={40}
-                      _text={{ fontSize: "lg" }}
-                      bg={"green.500"}
-                      onPress={() => navigation.navigate("Login")}
-                    >
-                      Login
-                    </Button>
-                  )}
-                </Stack>
-              </Box>
+                    Voltar
+                  </Button>
+                ) : (
+                  <Button
+                    borderRadius={40}
+                    _text={{ fontSize: "lg" }}
+                    bg={"green.500"}
+                    onPress={() => navigation.navigate("Login")}
+                  >
+                    Login
+                  </Button>
+                )}
+              </Stack>
             </Box>
           </Box>
-        </VStack>
+        </Box>
       </VStack>
-    </ImageBackground>
+    </ImagemFundo>
   );
 }
 const styles = StyleSheet.create({

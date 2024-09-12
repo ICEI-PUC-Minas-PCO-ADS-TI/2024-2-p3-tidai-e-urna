@@ -1,15 +1,13 @@
 import { StyleSheet, ImageBackground, Linking } from "react-native";
 import { VStack, Text } from "native-base";
+import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
+import { CardEleicao } from "../Componentes/CardaoEleição/CardaoEleicao";
 export default function Principal() {
   return (
-    <ImageBackground
-      source={require("../assets/backGround.png")}
-      style={styles.backgroundImage}
-    >
-      <VStack>
-        <Text>Pagina principal</Text>
-      </VStack>
-    </ImageBackground>
+    <ImagemFundo>
+      <Text>Eleições</Text>
+      <CardEleicao></CardEleicao>
+    </ImagemFundo>
   );
 }
 

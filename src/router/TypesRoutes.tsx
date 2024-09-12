@@ -10,13 +10,11 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<
   "Login",
   "Cadastro"
 >;
-type TabsScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Tabs"
->;
 export type Props = {
   navigation: LoginScreenNavigationProp;
 };
+
+type TabsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export type Props2 = {
   navigation: TabsScreenNavigationProp;

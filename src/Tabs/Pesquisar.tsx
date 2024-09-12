@@ -1,15 +1,11 @@
 import { StyleSheet, ImageBackground, Linking } from "react-native";
 import { VStack, Text } from "native-base";
+import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
 export default function Pesquisar() {
   return (
-    <ImageBackground
-      source={require("../assets/backGround.png")}
-      style={styles.backgroundImage}
-    >
-      <VStack>
-        <Text>Pagina de Pesquisar</Text>
-      </VStack>
-    </ImageBackground>
+    <ImagemFundo>
+      <Text>Pagina de Pesquisar</Text>
+    </ImagemFundo>
   );
 }
 
