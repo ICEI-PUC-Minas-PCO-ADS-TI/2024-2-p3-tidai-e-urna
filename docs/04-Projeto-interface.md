@@ -1,41 +1,41 @@
 
 # Projeto de interface
 
-**Tela de inicio:
+**Tela de inicio:**
 
 ![Tela Inicial](images/tela_inicio.PNG)
 
-**Tela Login Usuário:
+**Tela Login Usuário:**
 
 ![Tela de Login](images/tela_login.PNG)
 
-**Tela Cadastro de Usuário:
+**Tela Cadastro de Usuário:**
 
 ![Tela de Cadastro](images/tela_cadastro_usuario.PNG)
 
-**Tela de Perfil Estudante:
+**Tela de Perfil Estudante:**
 
 ![Tela Perfil Estudante](images/tela_perfil_usuario_comum.PNG)
 
-**Tela de Votação:
+**Tela de Votação:**
 
 ![Tela Votação](images/tela_votacao.PNG)
 
-**Tela Perfil Coordenador/Administrador:
+**Tela Perfil Coordenador/Administrador:**
 
 ![Tela Perfil Coordenador](images/tela_perfil_coordenador.PNG)
 
-**Tela Cadastro e Edição de Pleito (votação):
+**Tela Cadastro e Edição de Pleito (votação):**
 
 ![Tela cadastro e edição de pleito](images/tela_cadastro_pleito.PNG)
 
-**Tela Cadastro e Edição de candidato:
+**Tela Cadastro e Edição de candidato:**
 
 ![Tela cadastro e edição de candidato](images/tela_cadastro_candidato.PNG)
 
-**Tela de Acompanhamento da(s) Votação(ões):
+**Tela de Acompanhamento da(s) Votação(ões):**
 
-![Tela acompanhamento votação](images/tela_acompanhamento_votacao.PNG)
+![Tela acompanhamento votação](docs/images/tela_acompanhamento_votacao.PNG)
 
  ## User flow
 
