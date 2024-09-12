@@ -3,7 +3,7 @@
 
 **Tela de inicio:**
 
-![Tela Inicial](images/tela_inicio.PNG)
+![Tela Inicial](docs/tela_inicio.PNG)
 
 **Tela Login Usuário:**
 
