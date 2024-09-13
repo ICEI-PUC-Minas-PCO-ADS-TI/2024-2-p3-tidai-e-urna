@@ -5,42 +5,33 @@ import { Pressable } from "react-native";
 import { Props, TabsScreenNavigationProp } from "@/src/router/TypesRoutes";
 import { useNavigation } from "@react-navigation/native";
 
-interface CardaoEleicaoProps {
-  nomeCurso?: string;
-  periodoCurso?: string;
+interface CardCandidatoProps {
+  nome?: string;
+  curso?: string;
   id: number;
 }
 
 const imagemPathPuc = require("../../assets/puc.jpg");
-export function CardEleicao({
-  nomeCurso,
-  periodoCurso,
-  id,
-}: CardaoEleicaoProps) {
-  const navigation = useNavigation();
-
-  function goToPleito(id: string) {
-    navigation.navigate("Pleito", { id });
-  }
-
+export function CardCandidatos({ nome, curso, id }: CardCandidatoProps) {
   return (
-    <Pressable onPress={() => goToPleito(id)}>
+    <Pressable>
       <VStack
         marginTop={5}
         flexDir={"row"}
         w="100%"
+        h={70}
         alignItems={"center"}
-        bg={"teal.800"}
+        bg="contrastThreshold"
         justifyContent={"space-around"}
         p={2}
         borderBottomRadius="lg"
         borderBottomLeftRadius={40}
-        shadow={6}
+        borderBottomRightRadius={40}
+        shadow={2}
       >
-        <Avatar source={imagemPathPuc}></Avatar>
-        <Titulo fontSize={25}>{nomeCurso}</Titulo>
+        <Titulo fontSize={25}>{nome}</Titulo>
         <Text fontSize={20} fontWeight={"bold"} color={"white"}>
-          {periodoCurso} Periodo
+          {curso}
         </Text>
       </VStack>
     </Pressable>

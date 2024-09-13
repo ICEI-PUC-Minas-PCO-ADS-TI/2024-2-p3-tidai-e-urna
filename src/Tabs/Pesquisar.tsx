@@ -1,10 +1,13 @@
 import { StyleSheet, ImageBackground, Linking } from "react-native";
-import { VStack, Text } from "native-base";
+import { VStack, Text, Input } from "native-base";
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
+import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
+import { Ionicons } from "@expo/vector-icons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 export default function Pesquisar() {
   return (
     <ImagemFundo>
-      <Text>Pagina de Pesquisar</Text>
+      <EntradaDeTexto placeholder="Pesquise um Pleito"></EntradaDeTexto>
     </ImagemFundo>
   );
 }
