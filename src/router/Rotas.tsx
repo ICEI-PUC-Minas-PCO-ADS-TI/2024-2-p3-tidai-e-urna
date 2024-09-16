@@ -7,6 +7,7 @@ import { Login } from "../pages/Login";
 import Pleito from "../pages/Pleito";
 import EditarPerfil from "../pages/EditarPerfil";
 import CadastroCandidato from "../pages/CadastroCandidato";
+import CriarPleito from "../pages/CriarPleito";
 
 const Tab = createNativeStackNavigator();
 
@@ -14,8 +15,8 @@ export default function Rotas() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="CadastroCandidatos"
-        component={CadastroCandidato}
+        name="Login"
+        component={Login}
         options={{ headerShown: false }}
       />
       <Tab.Screen
@@ -31,6 +32,11 @@ export default function Rotas() {
       <Tab.Screen
         name="Pleito"
         component={Pleito}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="CriarPleito"
+        component={CriarPleito}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>

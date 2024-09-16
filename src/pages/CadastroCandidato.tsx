@@ -12,6 +12,7 @@ import { StyleSheet } from "react-native";
 import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
 import { useState } from "react";
 import { Botao } from "../Componentes/Botao/Botao";
+import BoxCampForm from "../Componentes/BoxCampForm/BoxCampForm";
 
 export default function CadastroCandidato() {
   const [service, setService] = useState("");
@@ -21,7 +22,7 @@ export default function CadastroCandidato() {
       <ImagemFundo>
         <VStack alignItems={"center"}>
           <Titulo>Cadastrar candidato</Titulo>
-          <Box padding={5} style={styles.box}>
+          <BoxCampForm>
             <EntradaDeTexto
               label="Nome"
               placeholder="Digite o nome"
@@ -82,7 +83,7 @@ export default function CadastroCandidato() {
                 Cancelar
               </Botao>
             </Box>
-          </Box>
+          </BoxCampForm>
         </VStack>
       </ImagemFundo>
     </ScrollView>

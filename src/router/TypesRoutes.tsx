@@ -1,4 +1,6 @@
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { TabParamList } from "../Tabs";
 
 export type RootStackParamList = {
   Login?: undefined; // Defina as telas e parâmetros que você possui no seu stack

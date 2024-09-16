@@ -13,16 +13,20 @@ import { ImageBackground, StyleSheet } from "react-native";
 import { Titulo } from "../Componentes/Titulo/Titulo";
 import Dropdown1 from "../Componentes/Dropdowns/Dropdown1";
 import AvatarPerfil from "../Componentes/Avatar/AvatarPerfil";
+import { Props2 } from "../router/TypesRoutes";
 
 const itemsMenu = [
   {
     nome: "Criar Pleito",
+    navigation: "CriarPleito",
   },
   {
     nome: "Editar perfil ",
+    navigation: "EditarPerfil",
   },
   {
     nome: "Cadastrar candidatos em um pleito",
+    navigation: "CadastroCandidato",
   },
 ];
 

@@ -1,3 +1,5 @@
+import { TabParamList } from "@/src/Tabs";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   Actionsheet,
   Box,
@@ -9,9 +11,10 @@ import {
 
 interface DropdownPros {
   nomeBotao?: string;
-  opcoesInputs: { nome: string }[];
+  opcoesInputs: { nome: string; navigation: keyof TabParamList }[];
 }
 export default function Dropdown({ nomeBotao, opcoesInputs }: DropdownPros) {
+  const rotasNavigation = useNavigation<NavigationProp<TabParamList>>();
   const { isOpen, onOpen, onClose } = useDisclose();
   return (
     <Center>
@@ -37,7 +40,11 @@ export default function Dropdown({ nomeBotao, opcoesInputs }: DropdownPros) {
           </Box>
           {opcoesInputs &&
             opcoesInputs.map((opcao) => (
-              <Actionsheet.Item>{opcao.nome}</Actionsheet.Item>
+              <Actionsheet.Item
+                onPress={() => rotasNavigation.navigate(opcao.navigation)}
+              >
+                <Text>{opcao.nome}</Text>
+              </Actionsheet.Item>
             ))}
         </Actionsheet.Content>
       </Actionsheet>
