@@ -2,22 +2,30 @@ import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
 import {
   Box,
   CheckIcon,
+  FlatList,
   FormControl,
   Input,
+  Modal,
   Select,
   Text,
   VStack,
+  Button,
+  Actionsheet,
+  useDisclose,
+  ScrollView,
 } from "native-base";
 import BoxCampForm from "../Componentes/BoxCampForm/BoxCampForm";
 import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
 import { useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Button } from "react-native";
+
 import { Botao } from "../Componentes/Botao/Botao";
+import { TouchableOpacity } from "react-native";
 
 export default function CriarPleito() {
-  const [service, setService] = useState("");
+  const [service, setService] = useState(""); //Estado do componente Periodo
 
+  // Cuida dos campos de data com o modal
   const [isVisible, setIsVisible] = useState(false);
   const [activeModal, setActiveModal] = useState<"start" | "end" | null>(null);
   const [dateInicio, setdateInicio] = useState<Date>(new Date());
@@ -44,6 +52,36 @@ export default function CriarPleito() {
     }
     setDateTermino(selectedDate);
     hideDatePicker();
+  };
+  //
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [availableItems] = useState([
+    "Gabriel Araujo",
+    "Jose",
+    "Maria",
+    "Ana",
+    "Pietro",
+    "Marcos",
+    "Fabio",
+    "Miguel",
+    "Carlos",
+    "Nora",
+    "Alysson",
+    "Leandro",
+    "Yasmin",
+    "Karol",
+    "Nubia",
+    "Matis",
+    "Lucio",
+  ]);
+  const { isOpen, onOpen, onClose } = useDisclose();
+
+  const toggleItemSelection = (item: string) => {
+    setSelectedItems((prevSelectedItems) =>
+      prevSelectedItems.includes(item)
+        ? prevSelectedItems.filter((i) => i !== item)
+        : [...prevSelectedItems, item]
+    );
   };
 
   return (
@@ -137,6 +175,52 @@ export default function CriarPleito() {
               borderRadius={10}
             >
               Selectionar data
+            </Botao>
+          </Box>
+          <FormControl.Label mt={3} _text={{ color: "black" }}>
+            Candidatos
+          </FormControl.Label>
+          <TouchableOpacity onPress={onOpen}>
+            <Box
+              borderWidth={1}
+              borderColor="gray.300"
+              padding={3}
+              borderRadius={5}
+              width="100%"
+            >
+              <Text>
+                {selectedItems.length > 0
+                  ? selectedItems.join(", ")
+                  : "Select items"}
+              </Text>
+            </Box>
+          </TouchableOpacity>
+          <Actionsheet isOpen={isOpen} onClose={onClose}>
+            <Actionsheet.Content>
+              <FlatList
+                data={availableItems}
+                renderItem={({ item }) => (
+                  <Button
+                    variant={selectedItems.includes(item) ? "solid" : "outline"}
+                    onPress={() => toggleItemSelection(item)}
+                    mb={2}
+                  >
+                    {item}
+                  </Button>
+                )}
+                keyExtractor={(item) => item}
+              />
+              <Button onPress={onClose} mt={4}>
+                Teste
+              </Button>
+            </Actionsheet.Content>
+          </Actionsheet>
+          <Box w={"100%"} flexWrap={"wrap"} flexDir={"row"}>
+            <Botao w={"100%"} mt={4} bg="green.500" borderRadius={40}>
+              Confirmar
+            </Botao>
+            <Botao w={"100%"} mt={4} bg="red.500" borderRadius={40}>
+              Cancelar
             </Botao>
           </Box>
         </BoxCampForm>
