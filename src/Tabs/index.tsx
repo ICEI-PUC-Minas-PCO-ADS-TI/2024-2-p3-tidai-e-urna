@@ -6,6 +6,7 @@ import Pesquisar from "./Pesquisar";
 import CadastroCandidato from "../pages/CadastroCandidato";
 import EditarPerfil from "../pages/EditarPerfil";
 import CriarPleito from "../pages/CriarPleito";
+import ApiGrafico from "../Componentes/APIGraficos/APIGraficos";
 
 export type TabParamList = {
   Principal: undefined;
@@ -40,7 +41,7 @@ const tabs = [
   {
     identificador: "Pesquisar",
     name: "Pesquisar",
-    component: Pesquisar,
+    component: ApiGrafico,
     icon: "search",
   },
   {
