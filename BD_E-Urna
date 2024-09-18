@@ -1,0 +1,52 @@
+create schema E_Urna;
+use E_urna;
+
+create table Aluno(
+Cpf int not null primary key,
+NumMatricula int,
+Nome varchar (45)
+);
+
+create table Coordenador(
+Cpf int, 
+NumPessoa int not null primary key,
+Nome varchar (45)
+);
+
+create table Candidato (
+Nome varchar (50),
+Curso varchar (45),
+Campus varchar(45),
+NumMatricula int not null primary key,
+NumCoordenador int not null,
+foreign key (NumCoordenador) references Coordenador (NumPessoa)
+);
+
+create table Pleito(
+Nome varchar(45),
+Curso varchar (45),
+Campus varchar (45),
+Duracao int not null,
+IdPleito int not null primary key auto_increment,
+NumCoordenador int not null,
+foreign key (NumCoordenador) references Coordenador (NumPessoa)
+);
+
+create table Votos_por_Candidato(
+Id int not null,
+MatriculaCandidato int not null,
+NomeCandidato varchar (45),
+NumVotos int,
+primary key (MatriculaCandidato,Id),
+foreign key (MatriculaCandidato) references Candidato (NumMatricula)
+);
+
+create table Candidatos_por_Pleito(
+NomePleito varchar (50),
+NomeCandidato varchar (45),
+IdPleito int not null,
+CandidatoMatricula int not null,
+primary key (IdPleito,CandidatoMatricula),
+foreign key (IdPleito) references Pleito (IdPleito),
+foreign key (CandidatoMatricula) references Candidato (MatriculaCandidato)
+);
