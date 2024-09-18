@@ -1,12 +1,13 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import Principal from "./Principal";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import ApiGrafico from "../pages/ApiGrafico";
+import CadastroCandidato from "../pages/CadastroCandidato";
+import CriarPleito from "../pages/CriarPleito";
+import EditarPerfil from "../pages/EditarPerfil";
+import Pleito from "../pages/Pleito";
 import Perfil from "./Perfil";
 import Pesquisar from "./Pesquisar";
-import CadastroCandidato from "../pages/CadastroCandidato";
-import EditarPerfil from "../pages/EditarPerfil";
-import CriarPleito from "../pages/CriarPleito";
-import ApiGrafico from "../Componentes/APIGraficos/APIGraficos";
+import Principal from "./Principal";
 
 export type TabParamList = {
   Principal: undefined;
@@ -15,6 +16,8 @@ export type TabParamList = {
   CadastroCandidato: undefined;
   EditarPerfil: undefined;
   CriarPleito: undefined;
+  Pleitos: undefined;
+  ApiGrafico: undefined;
 };
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -41,7 +44,7 @@ const tabs = [
   {
     identificador: "Pesquisar",
     name: "Pesquisar",
-    component: ApiGrafico,
+    component: Pesquisar,
     icon: "search",
   },
   {
@@ -58,6 +61,16 @@ const tabs = [
     identificador: "CriarPleito",
     name: "null",
     component: CriarPleito,
+  },
+  {
+    identificador: "Pleito",
+    name: "null",
+    component: Pleito,
+  },
+  {
+    identificador: "ApiGrafico",
+    name: "null",
+    component: ApiGrafico,
   },
 ];
 

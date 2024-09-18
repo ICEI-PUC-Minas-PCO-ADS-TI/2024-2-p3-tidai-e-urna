@@ -15,6 +15,11 @@ const pleitos = [
         nome: "James Arthus",
         curso: "ADS",
       },
+      {
+        id: 4,
+        nome: "Erikahus",
+        curso: "ADS",
+      },
     ],
   },
   {

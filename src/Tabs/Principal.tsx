@@ -21,6 +21,7 @@ export default function Principal() {
           {pleitos &&
             pleitos.map((pleito) => (
               <CardEleicao
+                quantidadeCandidatos={pleito.candidatos.length}
                 id={pleito.id}
                 nomeCurso={pleito.nomeCurso}
                 periodoCurso={pleito.periodoCurso}

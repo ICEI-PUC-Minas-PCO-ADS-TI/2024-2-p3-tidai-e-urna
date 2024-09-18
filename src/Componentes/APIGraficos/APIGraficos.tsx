@@ -11,7 +11,7 @@ import {
 } from "react-native-chart-kit";
 import { Titulo } from "../Titulo/Titulo";
 
-export default function ApiGrafico() {
+export default function APIGrafico() {
   return (
     <ImagemFundo>
       <VStack>
