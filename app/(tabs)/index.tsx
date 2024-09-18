@@ -1,12 +1,12 @@
 import { NativeBaseProvider, StatusBar } from "native-base";
 import { TEMAS } from "@/src/estilos/temas";
-import { Cadastro } from "@/src/pages/Cadastro";
+import Rotas from "@/src/router/Rotas";
 
 export default function HomeScreen() {
   return (
     <NativeBaseProvider theme={TEMAS}>
       <StatusBar backgroundColor={TEMAS.colors.blue[800]} />
-      <Cadastro />
+      <Rotas />
     </NativeBaseProvider>
   );
 }

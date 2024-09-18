@@ -8,6 +8,7 @@ import {
   Link,
   Stack,
   Checkbox,
+  ScrollView,
 } from "native-base";
 import Logo from "../assets/calendar-dates 1 (1).png";
 import { StyleSheet, ImageBackground, Linking } from "react-native";
@@ -15,73 +16,12 @@ import { Titulo } from "../Componentes/Titulo/Titulo";
 import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
 import { useState } from "react";
 import { Botao } from "../Componentes/Botao/Botao";
-import { handlePress } from "./Login";
+import { secoes } from "../utils/Cadastro";
+import { Props } from "../router/TypesRoutes";
+import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
 
-export function Cadastro() {
+export function Cadastro({ navigation }: Props) {
   const [numSecao, setNumSecao] = useState(0);
-
-  const secoes = [
-    {
-      id: 1,
-      titulo: "Cadastro",
-      entradaTexto: [
-        {
-          id: 1,
-          label: "Nome",
-          placeholder: "Digite seu nome completo",
-        },
-        {
-          id: 2,
-          label: "Sobrenome",
-          placeholder: "Digite seu sobrenome",
-        },
-        {
-          id: 3,
-          label: "CPF",
-          placeholder: "Digite seu CPF",
-        },
-      ],
-      checkbox: [],
-    },
-    {
-      id: 2,
-      titulo: "Para finalizar",
-      entradaTexto: [
-        {
-          id: 1,
-          label: "Senha",
-          placeholder: "Digite uma senha",
-        },
-        {
-          id: 2,
-          label: "Confirme a senha",
-          placeholder: "Digite a senha novamente",
-        },
-      ],
-      checkbox: [],
-    },
-    {
-      id: 3,
-      titulo: "Mais alguns dados sobre você",
-      entradaTexto: [
-        {
-          id: 1,
-          label: "Numero Matricula",
-          placeholder: "Digite seu numero de matricula",
-        },
-      ],
-      checkbox: [
-        {
-          id: 1,
-          value: "Aluno",
-        },
-        {
-          id: 2,
-          value: "Administrador",
-        },
-      ],
-    },
-  ];
 
   function avanacarSecao() {
     if (numSecao < secoes.length - 1) {
@@ -94,20 +34,16 @@ export function Cadastro() {
   }
 
   return (
-    <ImageBackground
-      source={require("../assets/backGround.png")}
-      style={styles.backgroundImage}
-    >
-      <VStack flex={1} justifyContent="start" alignItems={""} p={4}>
-        <Image style={styles.logoImage} source={Logo} alt="Logo E-Urna" />
-        <VStack
-          marginTop={2}
-          flex={1}
-          justifyContent={"start"}
-          alignItems={"center"}
-        >
+    <ImagemFundo>
+      <VStack
+        marginTop={2}
+        flex={1}
+        justifyContent={"start"}
+        alignItems={"center"}
+      >
+        <Box alignItems={"center"} justifyContent={"center"} height={"90%"}>
           <Titulo>{secoes[numSecao].titulo}</Titulo>
-          <Box padding={2} style={styles.box}>
+          <Box padding={5} style={styles.box}>
             {secoes[numSecao].entradaTexto.map((entrada) => {
               return (
                 <EntradaDeTexto
@@ -149,6 +85,7 @@ export function Cadastro() {
                     borderRadius={40}
                     _text={{ fontSize: "lg" }}
                     bg={"green.500"}
+                    onPress={() => navigation.navigate("Login")}
                   >
                     Login
                   </Button>
@@ -156,23 +93,21 @@ export function Cadastro() {
               </Stack>
             </Box>
           </Box>
-        </VStack>
+        </Box>
       </VStack>
-    </ImageBackground>
+    </ImagemFundo>
   );
 }
 const styles = StyleSheet.create({
   box: {
     width: 350,
-    borderRadius: 20,
-    borderColor: "black", // Define a cor da borda
-    borderWidth: 1, // Define a espessura da borda
-    borderStyle: "solid", // Define o estilo da borda
+    borderRadius: 40,
+    backgroundColor: "rgba(0,0,0,0.3)",
     padding: 4,
   },
   logoImage: {
-    width: 150,
-    height: 50,
+    width: 130,
+    height: 100,
   },
   backgroundImage: {
     flex: 1,
