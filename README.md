@@ -11,16 +11,15 @@ O projeto tem como objetivo desenvolver uma Urna Eletrônica Digital que permiti
 
 ## Integrantes
 
+* Alexandre Assis Martins
 * Rafael Brandão Silva
 * Rhillary Pawany Souza Carvalho
-* Nome completo do aluno 3
-* Nome completo do aluno 4
-* Nome completo do aluno 5
-* Nome completo do aluno 6
+* Wagner Teofilo de Souza Junior
+
 
 ## Professor
 
-* Nome completo do(a) professor(a)
+* Wagner Cipriano da Silva
 
 ## Instruções de utilização
 
