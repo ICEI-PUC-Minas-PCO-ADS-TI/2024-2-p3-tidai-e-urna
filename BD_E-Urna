@@ -4,13 +4,16 @@ use E_urna;
 create table Aluno(
 Cpf int not null primary key,
 NumMatricula int,
-Nome varchar (45)
+Nome varchar (45),
+Senha varchar (45) not null,
+email varchar (45) not null
 );
 
 create table Coordenador(
 Cpf int, 
 NumPessoa int not null primary key,
-Nome varchar (45)
+Nome varchar (45),
+Senha varchar (45) not null
 );
 
 create table Candidato (
