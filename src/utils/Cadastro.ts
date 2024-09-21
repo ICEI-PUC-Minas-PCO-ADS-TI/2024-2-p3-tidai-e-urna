@@ -12,18 +12,13 @@ const secoes = [
         id: 2,
         label: "Sobrenome",
         placeholder: "Digite seu sobrenome",
-      },
-      {
-        id: 3,
-        label: "CPF",
-        placeholder: "Digite seu CPF",
-      },
+      }
     ],
     checkbox: [],
   },
   {
     id: 2,
-    titulo: "Para finalizar",
+    titulo: "Alguns dados..",
     entradaTexto: [
       {
         id: 1,
@@ -40,7 +35,7 @@ const secoes = [
   },
   {
     id: 3,
-    titulo: "Alguns dados",
+    titulo: "Para finalizar",
     entradaTexto: [
       {
         id: 1,
@@ -62,3 +57,4 @@ const secoes = [
 ];
 
 export { secoes };
+

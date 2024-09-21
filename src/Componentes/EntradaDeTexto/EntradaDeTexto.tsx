@@ -1,5 +1,4 @@
-import { Box, FormControl, Input } from "native-base";
-import { ReactNode } from "react";
+import { FormControl, Input } from "native-base";
 
 interface InputsProps {
   label?: string;
@@ -9,6 +8,8 @@ interface InputsProps {
   width?: string;
   disabled?: boolean;
   value?: string;
+  onChangeText?: (text:string) => void;
+  
 }
 export function EntradaDeTexto({
   label,
@@ -17,6 +18,7 @@ export function EntradaDeTexto({
   width,
   disabled,
   value,
+  onChangeText
 }: InputsProps) {
   return (
     <FormControl mt={3}>
@@ -35,6 +37,7 @@ export function EntradaDeTexto({
         secureTextEntry={segureTextEntry}
         bgColor="gray.100"
         shadow={5}
+        onChangeText={onChangeText}
       ></Input>
     </FormControl>
   );
