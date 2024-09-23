@@ -1,12 +1,13 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import Principal from "./Principal";
-import Perfil from "./Perfil";
-import Pesquisar from "./Pesquisar";
-import CadastroCandidato from "../pages/CadastroCandidato";
-import EditarPerfil from "../pages/EditarPerfil";
-import CriarPleito from "../pages/CriarPleito";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ApiGrafico from "../Componentes/APIGraficos/APIGraficos";
+import CadastroCandidato from "../pages/CadastroCandidato";
+import CriarPleito from "../pages/CriarPleito";
+import EditarPerfil from "../pages/EditarPerfil";
+import EditarPleito from "../pages/EditarPleito";
+import Pleito from "../pages/Pleito";
+import Perfil from "./Perfil";
+import Principal from "./Principal";
 
 export type TabParamList = {
   Principal: undefined;
@@ -59,6 +60,16 @@ const tabs = [
     name: "null",
     component: CriarPleito,
   },
+  {
+    identificador: "EditarPleito",
+    name: "null",
+    component: EditarPleito
+  },
+  {
+    identificador: "Pleito",
+    name: "null",
+    component: Pleito
+  }
 ];
 
 export default function Tabs() {
@@ -74,8 +85,8 @@ export default function Tabs() {
             tabBarButton: tab.name === "null" ? () => null : undefined,
             tabBarIcon: tab.icon
               ? ({ color, size }) => (
-                  <Ionicons name={tab.icon} color={color} size={size} />
-                )
+                <Ionicons name={tab.icon} color={color} size={size} />
+              )
               : undefined,
           }}
         />

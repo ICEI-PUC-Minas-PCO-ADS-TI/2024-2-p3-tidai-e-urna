@@ -1,14 +1,14 @@
-import { Text, Avatar, VStack, Center, Box, Stack } from "native-base";
-import { Titulo } from "../Titulo/Titulo";
-import { useState } from "react";
-import { Pressable } from "react-native";
-import { Props, TabsScreenNavigationProp } from "@/src/router/TypesRoutes";
 import { useNavigation } from "@react-navigation/native";
+import { Avatar, Box, Text, VStack } from "native-base";
+import { Pressable } from "react-native";
+import { Titulo } from "../Titulo/Titulo";
 
 interface CardaoEleicaoProps {
   nomeCurso?: string;
   periodoCurso?: string;
   id: number;
+  quantidade: number;
+  dataVencimento: string
 }
 
 const imagemPathPuc = require("../../assets/puc.jpg");
@@ -45,4 +45,32 @@ export function CardEleicao({
       </VStack>
     </Pressable>
   );
+}
+export function Example({
+  nomeCurso,
+  periodoCurso,
+  id,
+  quantidade,
+  dataVencimento
+}: CardaoEleicaoProps) {
+  const navigation = useNavigation();
+
+  function goToPleito(id: string) {
+    navigation.navigate("Pleito", { id });
+  }
+  return (
+    <Pressable onPress={() => goToPleito(id)}>
+      <Box borderBottomLeftRadius={40} bg={"blue.400"} p={3} flexDir={"row"} w={"100%"} mt={2}>
+        <Box w={"50%"} >
+          <Text fontSize={20} color={"white"}>{nomeCurso}</Text>
+          <Text>{periodoCurso + " " + "Periodo"}</Text>
+          <Text>{"Numero candidatos " + " " + quantidade}</Text>
+          <Text>{dataVencimento}</Text>
+        </Box>
+        <Box w={"50%"} alignItems={"flex-end"}>< Avatar w={20} h={20} source={imagemPathPuc}></Avatar></Box>
+      </Box>
+
+
+    </Pressable >
+  )
 }

@@ -1,30 +1,25 @@
-import { StyleSheet, ImageBackground, Linking } from "react-native";
-import { VStack, Text, ScrollView } from "native-base";
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
-import { CardEleicao } from "../Componentes/CardaoEleição/CardaoEleicao";
-import { Titulo } from "../Componentes/Titulo/Titulo";
+import { ScrollView, VStack } from "native-base";
+import { StyleSheet } from "react-native";
+import { Example } from "../Componentes/CardaoEleição/CardaoEleicao";
 import { pleitos } from "../utils/Eleicoes";
+
 
 export default function Principal() {
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       <ImagemFundo>
-        <VStack w={"100%"} alignItems={"center"}>
-          <Titulo
-            w={"100%"}
-            textAlign={"center"}
-            bg={"indigo.400"}
-            fontSize={30}
-          >
-            Eleições
-          </Titulo>
+        <VStack flex={1} w={"100%"}>
           {pleitos &&
             pleitos.map((pleito) => (
-              <CardEleicao
+              <Example
+                key={pleito.id}
                 id={pleito.id}
+                dataVencimento={pleito.dataVencimento}
                 nomeCurso={pleito.nomeCurso}
                 periodoCurso={pleito.periodoCurso}
-              ></CardEleicao>
+                quantidade={pleito.candidatos.length}
+              />
             ))}
         </VStack>
       </ImagemFundo>
@@ -33,9 +28,7 @@ export default function Principal() {
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
+  scrollContainer: {
+    flexGrow: 1, // Permite que o ScrollView ocupe todo o espaço disponível
   },
 });

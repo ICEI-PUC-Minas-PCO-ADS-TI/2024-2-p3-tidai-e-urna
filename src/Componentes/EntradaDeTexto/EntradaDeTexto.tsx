@@ -8,8 +8,8 @@ interface InputsProps {
   width?: string;
   disabled?: boolean;
   value?: string;
-  onChangeText?: (text:string) => void;
-  
+  onChangeText?: (text: string) => void;
+
 }
 export function EntradaDeTexto({
   label,
@@ -21,7 +21,7 @@ export function EntradaDeTexto({
   onChangeText
 }: InputsProps) {
   return (
-    <FormControl mt={3}>
+    <FormControl width={"100%"} mt={3} >
       {label && (
         <FormControl.Label _text={{ color: "black" }}>
           {label}

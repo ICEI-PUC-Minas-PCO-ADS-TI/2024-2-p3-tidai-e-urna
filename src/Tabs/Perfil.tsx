@@ -1,19 +1,10 @@
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
 import {
-  Text,
-  VStack,
-  Avatar,
-  ScrollView,
-  Divider,
-  Heading,
-  Input,
-  Icon,
+  ScrollView
 } from "native-base";
-import { ImageBackground, StyleSheet } from "react-native";
-import { Titulo } from "../Componentes/Titulo/Titulo";
-import Dropdown1 from "../Componentes/Dropdowns/Dropdown1";
+import { StyleSheet } from "react-native";
 import AvatarPerfil from "../Componentes/Avatar/AvatarPerfil";
-import { Props2 } from "../router/TypesRoutes";
+import Dropdown1 from "../Componentes/Dropdowns/Dropdown1";
 
 const itemsMenu = [
   {
@@ -28,6 +19,10 @@ const itemsMenu = [
     nome: "Cadastrar candidatos em um pleito",
     navigation: "CadastroCandidato",
   },
+  {
+    nome: "Editar Pleito",
+    navigation: "EditarPleito"
+  }
 ];
 
 export default function Perfil() {

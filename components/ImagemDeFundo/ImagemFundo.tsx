@@ -1,23 +1,30 @@
+import React, { forwardRef } from "react";
 import { Image, VStack } from "native-base";
-import { ImageBackground, StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet, ImageBackgroundProps } from "react-native";
 import Logo from "../../src/assets/calendar-dates 1 (1).png";
 
 export interface ImagemFundoProps {
   children: React.ReactNode;
 }
-export default function ImagemFundo({ children }: ImagemFundoProps) {
+
+// Utilize forwardRef para permitir que refs sejam passadas
+const ImagemFundo = forwardRef<ImageBackground, ImagemFundoProps>(({ children }, ref) => {
   return (
     <ImageBackground
       source={require("../../src/assets/backGround.png")}
       style={styles.backgroundImage}
+      ref={ref} // Adicione a ref aqui
     >
-      <VStack flex={1} alignItems={""} p={1}>
+      <VStack flex={1} alignItems={"center"} p={1}>
         <Image style={styles.logoImage} source={Logo} alt="Logo E-Urna" />
         {children}
       </VStack>
     </ImageBackground>
   );
-}
+});
+
+// Exportando o componente
+export default ImagemFundo;
 
 const styles = StyleSheet.create({
   backgroundImage: {

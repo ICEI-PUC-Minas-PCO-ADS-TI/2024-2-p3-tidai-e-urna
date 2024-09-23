@@ -7,12 +7,14 @@ import {
   Select,
   VStack,
 } from "native-base";
-import { Titulo } from "../Componentes/Titulo/Titulo";
-import { StyleSheet } from "react-native";
-import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
 import { useState } from "react";
+import { StyleSheet } from "react-native";
 import { Botao } from "../Componentes/Botao/Botao";
 import BoxCampForm from "../Componentes/BoxCampForm/BoxCampForm";
+import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
+import { Titulo } from "../Componentes/Titulo/Titulo";
+import { cursosPuc } from "../utils/CursoPuc";
+import { periodosCursos } from "../utils/Periodos";
 
 export default function CadastroCandidato() {
   const [service, setService] = useState("");
@@ -27,10 +29,29 @@ export default function CadastroCandidato() {
               label="Nome"
               placeholder="Digite o nome"
             ></EntradaDeTexto>
-            <EntradaDeTexto
-              label="Nome"
-              placeholder="Digite o nome"
-            ></EntradaDeTexto>
+            <FormControl.Label _text={{ color: "black" }}>
+              Periodo
+            </FormControl.Label>
+
+            <Select
+              selectedValue={service}
+              minWidth="100"
+              bg={"white"}
+              accessibilityLabel="Choose Service"
+              placeholder="Periodo"
+              _selectedItem={{
+                bg: "teal.600",
+                endIcon: <CheckIcon size="5" />,
+              }}
+              mt={1}
+              onValueChange={(itemValue) => setService(itemValue)}
+            >
+              <Select.Item label="" value={""}></Select.Item>
+              {periodosCursos && periodosCursos.map(periodo => (
+                <Select.Item label={periodo.periodo} value={`${periodo.valor}`}></Select.Item>
+              ))}
+
+            </Select>
             <Box maxW="300" mt={3}>
               <FormControl.Label _text={{ color: "black" }}>
                 Curso
@@ -41,7 +62,7 @@ export default function CadastroCandidato() {
                 minWidth="200"
                 bg={"white"}
                 accessibilityLabel="Choose Service"
-                placeholder="Choose Service"
+                placeholder="Curso"
                 _selectedItem={{
                   bg: "teal.600",
                   endIcon: <CheckIcon size="5" />,
@@ -49,11 +70,10 @@ export default function CadastroCandidato() {
                 mt={1}
                 onValueChange={(itemValue) => setService(itemValue)}
               >
-                <Select.Item label="UX Research" value="ux" />
-                <Select.Item label="Web Development" value="web" />
-                <Select.Item label="Cross Platform Development" value="cross" />
-                <Select.Item label="UI Designing" value="ui" />
-                <Select.Item label="Backend Development" value="backend" />
+                {cursosPuc && cursosPuc.map(curso => (
+                  <Select.Item label={curso.nome} value={curso.valor}></Select.Item>
+                ))}
+
               </Select>
               <EntradaDeTexto
                 label="Matricula"

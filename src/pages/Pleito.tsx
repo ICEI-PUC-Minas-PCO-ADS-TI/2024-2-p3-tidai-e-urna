@@ -1,18 +1,19 @@
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
-import { VStack } from "native-base";
-import { Titulo } from "../Componentes/Titulo/Titulo";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import { useState } from "react";
+import { TouchableOpacity } from "react-native";
+import { CardCandidatos } from "../Componentes/CardaCandidato/CardCandidato";
+import { Titulo } from "../Componentes/Titulo/Titulo";
 import { RootStackParamList } from "../router/TypesRoutes";
 import { pleitos } from "../utils/Eleicoes";
-import { CardEleicao } from "../Componentes/CardaoEleição/CardaoEleicao";
-import { CardCandidatos } from "../Componentes/CardaCandidato/CardCandidato";
 
 type PleitoRouteProp = RouteProp<RootStackParamList, "Pleito">;
 
 export default function Pleito() {
   const route = useRoute<PleitoRouteProp>();
+  const [selectCandidato, setSelectCandidato] = useState<number | null>(null)
   const { id } = route.params;
-
+  const selecionadoCandidato = (candidatoId: number) => { }
   const pleito = pleitos.filter((pleito) => pleito.id == id);
 
   return (
@@ -22,11 +23,13 @@ export default function Pleito() {
       </Titulo>
       {pleito.map((candidatos) =>
         candidatos.candidatos.map((candidato) => (
-          <CardCandidatos
-            id={candidato.id}
-            nome={candidato.nome}
-            curso={candidato.curso}
-          ></CardCandidatos>
+          <TouchableOpacity>
+            <CardCandidatos
+              id={candidato.id}
+              nome={candidato.nome}
+              curso={candidato.curso}
+            ></CardCandidatos>
+          </TouchableOpacity>
         ))
       )}
     </ImagemFundo>
