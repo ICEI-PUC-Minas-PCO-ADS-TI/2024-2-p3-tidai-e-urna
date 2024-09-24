@@ -58,24 +58,24 @@ export default function EditarPleito() {
   };
 
   return (
-    <ScrollView>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <PanGestureHandler onGestureEvent={onGestureEvent}>
-          <Box style={{ flex: 1 }}> {/* Envolva todos os elementos em um Box */}
-            <DateTimePickerModal
-              isVisible={isVisible && activeModal === "start"}
-              mode="date"
-              onConfirm={handleConfirmInicio}
-              onCancel={hideDatePicker}
-            />
-            <DateTimePickerModal
-              isVisible={isVisible && activeModal === "end"}
-              mode="date"
-              onConfirm={handleConfirmTermino}
-              onCancel={hideDatePicker}
-            />
-            <ImagemFundo>
-              <Titulo>EditarPerfil</Titulo>
+    <ImagemFundo>
+      <ScrollView  >
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <PanGestureHandler onGestureEvent={onGestureEvent}>
+            <Box style={{ flex: 1 }} alignItems={"center"}> {/* Envolva todos os elementos em um Box */}
+              <DateTimePickerModal
+                isVisible={isVisible && activeModal === "start"}
+                mode="date"
+                onConfirm={handleConfirmInicio}
+                onCancel={hideDatePicker}
+              />
+              <DateTimePickerModal
+                isVisible={isVisible && activeModal === "end"}
+                mode="date"
+                onConfirm={handleConfirmTermino}
+                onCancel={hideDatePicker}
+              />
+              <Titulo>Editar Pleito</Titulo>
               <BoxCampForm>
                 <FormControl.Label _text={{ color: "black" }}>Buscar pleitos</FormControl.Label>
                 <Select
@@ -195,11 +195,13 @@ export default function EditarPleito() {
                   </Box>
                 }
               </BoxCampForm>
-            </ImagemFundo>
-          </Box>
-        </PanGestureHandler>
-      </GestureHandlerRootView>
-    </ScrollView>
+
+            </Box>
+
+          </PanGestureHandler>
+        </GestureHandlerRootView>
+      </ScrollView>
+    </ImagemFundo>
 
   )
 }

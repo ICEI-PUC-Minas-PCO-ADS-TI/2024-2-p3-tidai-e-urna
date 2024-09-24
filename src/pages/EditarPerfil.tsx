@@ -1,15 +1,15 @@
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
 import { Box, VStack } from "native-base";
-import { Titulo } from "../Componentes/Titulo/Titulo";
-import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
 import { StyleSheet } from "react-native";
 import { Botao } from "../Componentes/Botao/Botao";
+import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
+import { Titulo } from "../Componentes/Titulo/Titulo";
 
 export default function EditarPerfil() {
   return (
     <ImagemFundo>
       <VStack alignItems={"center"} justifyContent={"center"}>
-        <Titulo>Editar dados perfil</Titulo>
+        <Titulo >Editar dados perfil</Titulo>
         <Box padding={5} style={styles.box}>
           <EntradaDeTexto
             label="E-mail"

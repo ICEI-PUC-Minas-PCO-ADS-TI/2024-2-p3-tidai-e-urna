@@ -1,9 +1,6 @@
-import { Text, Avatar, VStack, Center, Box, Stack } from "native-base";
-import { Titulo } from "../Titulo/Titulo";
-import { useState } from "react";
+import { Text, VStack } from "native-base";
 import { Pressable } from "react-native";
-import { Props, TabsScreenNavigationProp } from "@/src/router/TypesRoutes";
-import { useNavigation } from "@react-navigation/native";
+import { Titulo } from "../Titulo/Titulo";
 
 interface CardCandidatoProps {
   nome?: string;
@@ -16,12 +13,11 @@ export function CardCandidatos({ nome, curso, id }: CardCandidatoProps) {
   return (
     <Pressable>
       <VStack
-        marginTop={5}
+
         flexDir={"row"}
         w="100%"
-        h={70}
         alignItems={"center"}
-        bg="contrastThreshold"
+        bg="white"
         justifyContent={"space-around"}
         p={2}
         borderBottomRadius="lg"
@@ -30,7 +26,7 @@ export function CardCandidatos({ nome, curso, id }: CardCandidatoProps) {
         shadow={2}
       >
         <Titulo fontSize={25}>{nome}</Titulo>
-        <Text fontSize={20} fontWeight={"bold"} color={"white"}>
+        <Text fontSize={20} fontWeight={"bold"} color={"gold"}>
           {curso}
         </Text>
       </VStack>

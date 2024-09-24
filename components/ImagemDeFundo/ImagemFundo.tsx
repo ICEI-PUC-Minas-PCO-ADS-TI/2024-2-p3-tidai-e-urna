@@ -1,6 +1,6 @@
-import React, { forwardRef } from "react";
 import { Image, VStack } from "native-base";
-import { ImageBackground, StyleSheet, ImageBackgroundProps } from "react-native";
+import React, { forwardRef } from "react";
+import { ImageBackground, StyleSheet } from "react-native";
 import Logo from "../../src/assets/calendar-dates 1 (1).png";
 
 export interface ImagemFundoProps {
@@ -12,7 +12,10 @@ const ImagemFundo = forwardRef<ImageBackground, ImagemFundoProps>(({ children },
   return (
     <ImageBackground
       source={require("../../src/assets/backGround.png")}
-      style={styles.backgroundImage}
+      style={
+        styles.backgroundImage
+
+      }
       ref={ref} // Adicione a ref aqui
     >
       <VStack flex={1} alignItems={"center"} p={1}>
