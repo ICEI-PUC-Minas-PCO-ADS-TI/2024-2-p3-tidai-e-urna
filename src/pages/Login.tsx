@@ -13,56 +13,57 @@ import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
 import { Titulo } from "../Componentes/Titulo/Titulo";
 import { Props2 } from "../router/TypesRoutes";
 
+
 interface LoginRequest {
-  nome: string,
-  senha:string
+  matricula: string,
+  senha: string
 }
 interface LoginResponse {
   token: string
 }
 export function Login({ navigation }: Props2) {
   const [matricula, setMatricula] = useState("")
-  const [senha, setSenha] =  useState("")
+  const [senha, setSenha] = useState("")
 
-  const teste = (matriculaParam:string, senhaParam: string) => {
-    alert("Matricula " + matriculaParam )
+  const teste = (matriculaParam: string, senhaParam: string) => {
+    alert("Matricula " + matriculaParam)
     alert("Senha " + senhaParam)
   }
-  const login =  async (matriculaParam: string, senhaParam: string): Promise<Boolean | void> => {
+  const login = async (matriculaParam: string, senhaParam: string): Promise<Boolean | void> => {
     const url = "http://192.168.18.6:8084/api/v1/login";
 
     const requestBody: LoginRequest = {
-       nome:matriculaParam,
-       senha: senhaParam
-      
-      };
-      console.log(requestBody)
-    
+      matricula: matriculaParam,
+      senha: senhaParam
+
+    };
+    console.log(requestBody)
 
 
-      try {
-        const response: AxiosResponse<LoginResponse> = await axios.post(url, requestBody, { timeout: 5000 }); // Tempo limite de 5 segundos
-        console.log('Login bem-sucedido:', response.data);
 
-        return true; // Retorna o token ou dados de sucesso
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          // Se o erro for de Axios, você pode acessar mais informações
-          console.error('Erro de Axios:', error.message);
-          if (error.response) {
-            // A requisição foi feita e o servidor respondeu com um código de status
-            console.error('Status:', error.response.status);
-            console.error('Dados:', error.response.data);
-          } else if (error.request) {
-            // A requisição foi feita, mas não houve resposta
-            console.error('Erro de requisição:', error.request);
-          }
-        } else {
-          // Para outros erros que não são de Axios
-          console.error('Erro não relacionado ao Axios:', error);
+    try {
+      const response: AxiosResponse<LoginResponse> = await axios.post(url, requestBody, { timeout: 5000 }); // Tempo limite de 5 segundos
+      console.log('Login bem-sucedido:', response.data);
+
+      return true; // Retorna o token ou dados de sucesso
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // Se o erro for de Axios, você pode acessar mais informações
+        console.error('Erro de Axios:', error.message);
+        if (error.response) {
+          // A requisição foi feita e o servidor respondeu com um código de status
+          console.error('Status:', error.response.status);
+          console.error('Dados:', error.response.data);
+        } else if (error.request) {
+          // A requisição foi feita, mas não houve resposta
+          console.error('Erro de requisição:', error.request);
         }
+      } else {
+        // Para outros erros que não são de Axios
+        console.error('Erro não relacionado ao Axios:', error);
       }
-      
+    }
+
   }
   return (
     <ImagemFundo>
@@ -100,13 +101,13 @@ export function Login({ navigation }: Props2) {
                   borderRadius={40}
                   _text={{ fontSize: "lg" }}
                   bg={"teal.500"}
-                  onPress={async () =>  {
-                    const response = await login(matricula,senha) 
-                    if(response){
+                  onPress={async () => {
+                    const response = await login(matricula, senha)
+                    if (response) {
                       navigation.navigate('Tabs')
                     }
                   }}
-                  //onPress={() => navigation.navigate("Tabs")}
+                //onPress={() => navigation.navigate("Tabs")}
                 >
                   Acessar
                 </Botao>

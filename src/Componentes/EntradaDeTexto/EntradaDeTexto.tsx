@@ -9,6 +9,7 @@ interface InputsProps {
   disabled?: boolean;
   value?: string;
   onChangeText?: (text: string) => void;
+  onBlur?: (text: string) => void
 
 }
 export function EntradaDeTexto({
