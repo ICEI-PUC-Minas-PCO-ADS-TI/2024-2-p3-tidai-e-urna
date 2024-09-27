@@ -1,12 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ApiGrafico from "../Componentes/APIGraficos/APIGraficos";
 import CadastroCandidato from "../pages/CadastroCandidato";
 import CriarPleito from "../pages/CriarPleito";
 import EditarPerfil from "../pages/EditarPerfil";
 import EditarPleito from "../pages/EditarPleito";
 import Pleito from "../pages/Pleito";
 import Perfil from "./Perfil";
+import Pesquisar from "./Pesquisar";
 import Principal from "./Principal";
 
 export type TabParamList = {
@@ -42,7 +42,7 @@ const tabs = [
   {
     identificador: "Pesquisar",
     name: "Pesquisar",
-    component: ApiGrafico,
+    component: Pesquisar,
     icon: "search",
   },
   {

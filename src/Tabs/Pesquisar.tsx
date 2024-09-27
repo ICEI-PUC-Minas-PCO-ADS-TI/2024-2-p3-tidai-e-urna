@@ -1,31 +1,22 @@
-import { StyleSheet, ImageBackground, Linking } from "react-native";
-import { VStack, Text, Input, Icon, Heading } from "native-base";
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
-import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
-import { Ionicons } from "@expo/vector-icons";
+import { ScrollView, VStack } from "native-base";
+import { StyleSheet } from "react-native";
+import ApiGrafico from "../Componentes/APIGraficos/APIGraficos";
+import { Titulo } from "../Componentes/Titulo/Titulo";
+import { pleitos } from "../utils/Eleicoes";
+
 export default function Pesquisar() {
   return (
-    <ImagemFundo>
-      <VStack w="100%" space={5} alignSelf="center">
-        <Heading fontSize="lg">Cupertino</Heading>
-        <Input
-          placeholder="Search"
-          variant="filled"
-          width="100%"
-          borderRadius="10"
-          py="1"
-          px="2"
-          InputLeftElement={
-            <Icon
-              ml="2"
-              size="4"
-              color="gray.400"
-              as={<Ionicons name="search" />}
-            />
-          }
-        />
-      </VStack>
-    </ImagemFundo>
+    <ScrollView>
+      <ImagemFundo >
+        <VStack>
+          <Titulo textAlign={"center"} >Eleições</Titulo>
+          {pleitos.map((pleito) => {
+            return <ApiGrafico periodoCurso={`${pleito.periodoCurso} periodo ${pleito.nomeCurso}`} candidatos={pleito.candidatos}></ApiGrafico>
+          })}
+        </VStack>
+      </ImagemFundo>
+    </ScrollView>
   );
 }
 

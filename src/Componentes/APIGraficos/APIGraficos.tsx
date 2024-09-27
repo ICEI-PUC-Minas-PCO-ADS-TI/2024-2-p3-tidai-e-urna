@@ -1,8 +1,8 @@
-import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
-import { View, VStack } from "native-base";
+import { Box, ScrollView, Text } from "native-base";
 import { Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
-import { Titulo } from "../Titulo/Titulo";
+import { ColorsApi } from "../../utils/Colors";
+
 const chartConfig = {
   backgroundGradientFrom: "#1E2923",
   backgroundGradientFromOpacity: 0,
@@ -13,64 +13,57 @@ const chartConfig = {
   barPercentage: 0.5,
   useShadowColorFromDataset: false // optional
 };
-export default function ApiGrafico() {
+interface Candidato {
+  id: number;
+  nome: string;
+  curso: string;
+  votos: number;
+}
+interface ApiGraficoProps {
+  candidatos: Candidato[];
+  periodoCurso: string
+
+
+}
+export default function ApiGrafico({ candidatos, periodoCurso }: ApiGraficoProps) {
+
   const data = [
-    {
-      name: "Seoul",
-      population: 21500000,
-      color: "rgba(131, 167, 234, 1)",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "Toronto",
-      population: 2800000,
-      color: "#F00",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "Beijing",
-      population: 527612,
-      color: "red",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "New York",
-      population: 8538000,
-      color: "#ffffff",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "Moscow",
-      population: 11920000,
-      color: "rgb(0, 0, 255)",
-      legendFontColor: "#7F7F7F",
+
+
+  ];
+
+
+  for (let i = 0; i < candidatos.length; i++) {
+    let pleitoData = {
+      name: candidatos[i].nome,
+      population: candidatos[i].votos,
+      color: ColorsApi[i],
+      legendFontColor: "#000000",
       legendFontSize: 15
     }
-  ];
+    data.push(pleitoData)
+
+
+  }
   const screenWidth = Dimensions.get("window").width;
 
   return (
-    <ImagemFundo>
-      <VStack>
-        <View alignItems={"center"}>
-          <Titulo>Eleiçoes</Titulo>
-          <PieChart
-            data={data}
-            width={screenWidth}
-            height={220}
-            chartConfig={chartConfig}
-            accessor={"population"}
-            backgroundColor={"transparent"}
-            paddingLeft={"15"}
-            center={[10, 50]}
-            absolute
-          />
-        </View>
-      </VStack>
-    </ImagemFundo>
+    <ScrollView>
+      <Box borderRadius={25} alignItems={"center"} mt={10} marginRight={9} w={"100%"} bg={"rgba(0,0,0,0.3)"}>
+        <Text color={"white"} fontSize={25}>{periodoCurso}</Text>
+        <PieChart
+          data={data}
+          width={screenWidth}
+          height={220}
+          chartConfig={chartConfig}
+          accessor={"population"}
+          backgroundColor={"transparent"}
+          paddingLeft={"-10"}
+          center={[10, 20]}
+          absolute
+        />
+      </Box>
+    </ScrollView>
+
   );
 }
