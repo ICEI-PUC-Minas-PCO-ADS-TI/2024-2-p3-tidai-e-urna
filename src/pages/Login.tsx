@@ -1,5 +1,6 @@
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
 import axios, { AxiosResponse } from "axios";
+import { Formik } from "formik";
 import {
   Box,
   Link,
@@ -7,9 +8,11 @@ import {
   VStack
 } from "native-base";
 import { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import * as Yup from "yup";
 import { Botao } from "../Componentes/Botao/Botao";
 import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
+import IconLoading from "../Componentes/IconLoading/IconLoading";
 import { Titulo } from "../Componentes/Titulo/Titulo";
 import { Props2 } from "../router/TypesRoutes";
 
@@ -22,14 +25,11 @@ interface LoginResponse {
   token: string
 }
 export function Login({ navigation }: Props2) {
-  const [matricula, setMatricula] = useState("")
-  const [senha, setSenha] = useState("")
 
-  const teste = (matriculaParam: string, senhaParam: string) => {
-    alert("Matricula " + matriculaParam)
-    alert("Senha " + senhaParam)
-  }
-  const login = async (matriculaParam: string, senhaParam: string): Promise<Boolean | void> => {
+  const [showLoading, setShowLoading] = useState(false)
+
+
+  const login = async (matriculaParam: number, senhaParam: string): Promise<Boolean | void> => {
     const url = "http://192.168.18.6:8084/api/v1/login";
 
     const requestBody: LoginRequest = {
@@ -65,6 +65,20 @@ export function Login({ navigation }: Props2) {
     }
 
   }
+
+  const verificacaoLogin = async (matricula: string, senha: string) => {
+    const response = await login(Number(matricula), senha)
+    if (response) {
+
+      // navigation.navigate('Tabs')
+    }
+    setShowLoading(false)
+  }
+
+  const SchemasLogin = Yup.object().shape({
+    numeroPessoa: Yup.string().required("Campo o brigatorio").matches(/^\d+$/, 'O campo deve conter apenas números'),
+    numeroSenha: Yup.string().required("Campo obrigatorio")
+  })
   return (
     <ImagemFundo>
       <VStack
@@ -76,51 +90,71 @@ export function Login({ navigation }: Props2) {
         <Box alignItems={"center"} justifyContent={"center"} height={"85%"}>
           <Titulo>Login</Titulo>
           <Box padding={5} style={styles.box}>
-            <EntradaDeTexto
-              placeholder="Insira seu identificador"
-              label="Matricula/Pessoa"
-              onChangeText={(matricula) => setMatricula(matricula)}
-            />
-            <EntradaDeTexto
-              placeholder="Insira sua senha"
-              segureTextEntry={true}
-              label="Senha"
-              onChangeText={(senha) => setSenha(senha)}
-            />
-            <Link
-              href="https://www.twitch.tv/"
-              _text={{ color: "white", textDecoration: "none" }}
-              marginTop={5}
-              justifyContent={"center"}
+            <Formik
+              initialValues={{
+                numeroPessoa: "",
+                numeroSenha: "",
+              }}
+              validationSchema={SchemasLogin}
+              onSubmit={(values) => {
+                setShowLoading(true)
+
+                setTimeout(() => {
+                  verificacaoLogin(values.numeroPessoa, values.numeroSenha)
+                }, 4000)
+              }}
+
             >
-              Esqueceu sua senha?
-            </Link>
-            <Box marginTop={3} alignItems={"center"} width={"100%"} padding={2}>
-              <Stack space={4} width={"75%"}>
-                <Botao
-                  borderRadius={40}
-                  _text={{ fontSize: "lg" }}
-                  bg={"teal.500"}
-                  onPress={async () => {
-                    const response = await login(matricula, senha)
-                    if (response) {
-                      navigation.navigate('Tabs')
-                    }
-                  }}
-                //onPress={() => navigation.navigate("Tabs")}
-                >
-                  Acessar
-                </Botao>
-                <Botao
-                  borderRadius={40}
-                  _text={{ fontSize: "lg" }}
-                  bg={"green.500"}
-                  onPress={() => navigation.navigate("Cadastro")}
-                >
-                  Cadastrar
-                </Botao>
-              </Stack>
-            </Box>
+              {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                <View>
+                  <EntradaDeTexto
+                    placeholder="Insira seu identificador"
+                    label="Matricula/Pessoa"
+                    onChangeText={handleChange("numeroPessoa")}
+                    onBlur={handleBlur("numeroPessoa")}
+                    errorMessage={touched.numeroPessoa && errors.numeroPessoa}
+                  />
+                  <EntradaDeTexto
+                    placeholder="Insira sua senha"
+                    segureTextEntry={true}
+                    label="Senha"
+                    onChangeText={handleChange("numeroSenha")}
+                    onBlur={handleBlur("numeroSenha")}
+                    errorMessage={touched.numeroSenha && errors.numeroSenha}
+                  />
+                  <Box mt={5} w={"100%"}>{showLoading && <IconLoading></IconLoading>}</Box>
+                  <Link
+                    href="https://www.twitch.tv/"
+                    _text={{ color: "white", textDecoration: "none" }}
+                    mt={2}
+                    justifyContent={"center"}
+                  >
+                    Esqueceu sua senha?
+                  </Link>
+                  <Box marginTop={3} alignItems={"center"} width={"100%"} padding={2}>
+                    <Stack space={4} width={"75%"}>
+                      <Botao
+                        borderRadius={40}
+                        _text={{ fontSize: "lg" }}
+                        bg={"teal.500"}
+                        onPress={handleSubmit}
+                      >
+                        Acessar
+                      </Botao>
+                      <Botao
+                        borderRadius={40}
+                        _text={{ fontSize: "lg" }}
+                        bg={"green.500"}
+                        onPress={() => navigation.navigate("Cadastro")}
+                      >
+                        Cadastrar
+                      </Botao>
+                    </Stack>
+                  </Box>
+                </View>
+              )}
+            </Formik>
+
           </Box>
         </Box>
       </VStack>

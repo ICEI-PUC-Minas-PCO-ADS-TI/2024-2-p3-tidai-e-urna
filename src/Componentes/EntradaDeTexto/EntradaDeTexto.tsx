@@ -1,4 +1,4 @@
-import { FormControl, Input } from "native-base";
+import { FormControl, Input, WarningOutlineIcon } from "native-base";
 
 interface InputsProps {
   label?: string;
@@ -8,8 +8,9 @@ interface InputsProps {
   width?: string;
   disabled?: boolean;
   value?: string;
-  onChangeText?: (text: string) => void;
-  onBlur?: (text: string) => void
+  onChangeText?: (text: any) => void;
+  onBlur?: (text: any) => void
+  errorMessage?: string
 
 }
 export function EntradaDeTexto({
@@ -19,10 +20,12 @@ export function EntradaDeTexto({
   width,
   disabled,
   value,
-  onChangeText
+  onChangeText,
+  onBlur,
+  errorMessage
 }: InputsProps) {
   return (
-    <FormControl width={"100%"} mt={3} >
+    <FormControl isInvalid={!!errorMessage} width={"100%"} mt={3} >
       {label && (
         <FormControl.Label _text={{ color: "black" }}>
           {label}
@@ -39,7 +42,14 @@ export function EntradaDeTexto({
         bgColor="gray.100"
         shadow={5}
         onChangeText={onChangeText}
-      ></Input>
+        onBlur={onBlur}
+        borderColor={errorMessage ? "red.500" : "gray.300"}
+      />
+      {errorMessage && (
+        <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon ></WarningOutlineIcon>}>
+          {errorMessage}
+        </FormControl.ErrorMessage>
+      )}
     </FormControl>
   );
 }

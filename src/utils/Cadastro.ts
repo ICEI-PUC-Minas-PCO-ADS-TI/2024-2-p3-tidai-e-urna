@@ -7,11 +7,13 @@ const secoes = [
         id: 1,
         label: "Nome",
         placeholder: "Digite seu nome completo",
+        nameYup:"nomeUsuario"
       },
       {
         id: 2,
         label: "Sobrenome",
         placeholder: "Digite seu sobrenome",
+        nameYup:"sobrenomeUsuario"
       }
     ],
     checkbox: [],
@@ -24,11 +26,13 @@ const secoes = [
         id: 1,
         label: "Senha",
         placeholder: "Digite uma senha",
+        nameYup:"senhaUsuario"
       },
       {
         id: 2,
         label: "Confirme a senha",
         placeholder: "Digite a senha novamente",
+        nameYup:"confirmarSenhaUsuario"
       },
     ],
     checkbox: [],
@@ -41,6 +45,7 @@ const secoes = [
         id: 1,
         label: "Numero Matricula",
         placeholder: "Digite seu numero de matricula",
+        nameYup:"numeroMatriculaPessoa"
       },
     ],
     checkbox: [
