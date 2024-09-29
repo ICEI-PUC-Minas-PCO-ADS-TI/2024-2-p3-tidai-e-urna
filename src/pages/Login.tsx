@@ -69,8 +69,7 @@ export function Login({ navigation }: Props2) {
   const verificacaoLogin = async (matricula: string, senha: string) => {
     const response = await login(Number(matricula), senha)
     if (response) {
-
-      // navigation.navigate('Tabs')
+      navigation.navigate('Tabs')
     }
     setShowLoading(false)
   }
