@@ -1,5 +1,7 @@
 import { Heading, HStack, Spinner } from "native-base";
 
+
+
 export default function IconLoading() {
   return <HStack justifyContent="center" w={"100%"}>
     <Spinner accessibilityLabel="Loading posts" />

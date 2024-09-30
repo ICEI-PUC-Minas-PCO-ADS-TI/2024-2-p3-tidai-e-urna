@@ -18,8 +18,8 @@ import { Props2 } from "../router/TypesRoutes";
 
 
 interface LoginRequest {
-  matricula: string,
-  senha: string
+  numeroMatriculaPessoa: string,
+  senhaUsuario: string
 }
 interface LoginResponse {
   token: string
@@ -33,8 +33,8 @@ export function Login({ navigation }: Props2) {
     const url = "http://192.168.18.6:8084/api/v1/login";
 
     const requestBody: LoginRequest = {
-      matricula: matriculaParam,
-      senha: senhaParam
+      numeroMatriculaPessoa: matriculaParam,
+      senhaUsuario: senhaParam
 
     };
     console.log(requestBody)
@@ -75,8 +75,8 @@ export function Login({ navigation }: Props2) {
   }
 
   const SchemasLogin = Yup.object().shape({
-    numeroPessoa: Yup.string().required("Campo o brigatorio").matches(/^\d+$/, 'O campo deve conter apenas números'),
-    numeroSenha: Yup.string().required("Campo obrigatorio")
+    numeroMatriculaPessoa: Yup.string().required("Campo o brigatorio").matches(/^\d+$/, 'O campo deve conter apenas números'),
+    senhaUsuario: Yup.string().required("Campo obrigatorio")
   })
   return (
     <ImagemFundo>
@@ -91,15 +91,15 @@ export function Login({ navigation }: Props2) {
           <Box padding={5} style={styles.box}>
             <Formik
               initialValues={{
-                numeroPessoa: "",
-                numeroSenha: "",
+                numeroMatriculaPessoa: "",
+                senhaUsuario: "",
               }}
               validationSchema={SchemasLogin}
               onSubmit={(values) => {
                 setShowLoading(true)
 
                 setTimeout(() => {
-                  verificacaoLogin(values.numeroPessoa, values.numeroSenha)
+                  verificacaoLogin(values.numeroMatriculaPessoa, values.senhaUsuario)
                 }, 4000)
               }}
 
@@ -109,19 +109,19 @@ export function Login({ navigation }: Props2) {
                   <EntradaDeTexto
                     placeholder="Insira seu identificador"
                     label="Matricula/Pessoa"
-                    onChangeText={handleChange("numeroPessoa")}
-                    onBlur={handleBlur("numeroPessoa")}
-                    errorMessage={touched.numeroPessoa && errors.numeroPessoa}
+                    onChangeText={handleChange("numeroMatriculaPessoa")}
+                    onBlur={handleBlur("numeroMatriculaPessoa")}
+                    errorMessage={touched.numeroMatriculaPessoa && errors.numeroMatriculaPessoa}
                   />
                   <EntradaDeTexto
                     placeholder="Insira sua senha"
                     segureTextEntry={true}
                     label="Senha"
-                    onChangeText={handleChange("numeroSenha")}
-                    onBlur={handleBlur("numeroSenha")}
-                    errorMessage={touched.numeroSenha && errors.numeroSenha}
+                    onChangeText={handleChange("senhaUsuario")}
+                    onBlur={handleBlur("senhaUsuario")}
+                    errorMessage={touched.senhaUsuario && errors.senhaUsuario}
                   />
-                  <Box mt={5} w={"100%"}>{showLoading && <IconLoading></IconLoading>}</Box>
+                  <Box mt={5} w={"100%"}>{showLoading && <IconLoading menssgaem="Verificando credenciais"></IconLoading>}</Box>
                   <Link
                     href="https://www.twitch.tv/"
                     _text={{ color: "white", textDecoration: "none" }}

@@ -1,4 +1,5 @@
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
+import axios, { AxiosResponse } from "axios";
 import { Formik } from "formik";
 import {
   Box,
@@ -12,12 +13,24 @@ import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 import { Botao } from "../Componentes/Botao/Botao";
 import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
+import IconLoading from "../Componentes/IconLoading/IconLoading";
 import { Titulo } from "../Componentes/Titulo/Titulo";
 import { Props } from "../router/TypesRoutes";
 import { secoes } from "../utils/Cadastro";
 
+
+interface CadastroRequest {
+  nomeUsuario: string,
+  sobrenomeUsuario?: string,
+  senhaUsuario: string,
+  numeroMatriculaPessoa: string,
+  email: string,
+}
+
 export function Cadastro({ navigation }: Props) {
   const [numSecao, setNumSecao] = useState(0);
+  const [showLoading, setShowLoading] = useState(false)
+
 
   function avanacarSecao() {
     if (numSecao < secoes.length - 1) {
@@ -27,6 +40,56 @@ export function Cadastro({ navigation }: Props) {
 
   function voltarSesao() {
     setNumSecao(numSecao - 1);
+  }
+  const cadastroUsuario = async (nomeUsuarioParam: string, sobreNomeParam: string, matriculaParam: number, senhaParam: string): Promise<Boolean | void> => {
+    const url = "http://192.168.18.6:8084/api/v1/cadastro";
+
+    const requestBody: CadastroRequest = {
+      nomeUsuario: nomeUsuarioParam + " " + sobreNomeParam,
+      senhaUsuario: senhaParam,
+      numeroMatriculaPessoa: matriculaParam,
+      email: ""
+
+    };
+
+
+
+    try {
+      const response: AxiosResponse<CadastroRequest> = await axios.post(url, requestBody, { timeout: 5000 }); // Tempo limite de 5 segundos
+      console.log('Cadastro bem-sucedido:', response.data);
+
+      return true; // Retorna o token ou dados de sucesso
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // Se o erro for de Axios, você pode acessar mais informações
+        console.error('Erro de Axios:', error.message);
+        if (error.response) {
+          // A requisição foi feita e o servidor respondeu com um código de status
+          console.error('Status:', error.response.status);
+          console.error('Dados:', error.response.data);
+        } else if (error.request) {
+          // A requisição foi feita, mas não houve resposta
+          console.error('Erro de requisição:', error.request);
+        }
+      } else {
+        // Para outros erros que não são de Axios
+        console.error('Erro não relacionado ao Axios:', error);
+      }
+    }
+
+  }
+
+  const verificarUsuario = async (newUsuario: string, newSobreNome: string, newMatricula: string, newSenha: string) => {
+    setShowLoading(true)
+    const response = await cadastroUsuario(newUsuario, newSobreNome, Number(newMatricula), newSenha)
+
+
+    if (response) {
+      setShowLoading(false)
+      navigation.navigate("Login")
+    } else {
+      setShowLoading(false)
+    }
   }
 
   const SchemasCadastro = [
@@ -63,12 +126,10 @@ export function Cadastro({ navigation }: Props) {
               }}
               validationSchema={SchemasCadastro[numSecao]}
               onSubmit={(values) => {
-                console.log("Avançar")
                 avanacarSecao()
-                console.log(values)
-                setTimeout(() => {
-
-                }, 4000)
+                if (numSecao == secoes.length - 1) {
+                  verificarUsuario(values.nomeUsuario, values.sobrenomeUsuario, values.numeroMatriculaPessoa, values.senhaUsuario)
+                }
               }}
             >
               {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
@@ -87,6 +148,7 @@ export function Cadastro({ navigation }: Props) {
                       />
                     );
                   })}
+                  <Box mt={5} w={"100%"}>{showLoading && <IconLoading menssgaem="Verificado numero Pessoa/Matricula"></IconLoading>}</Box>
                   <Box marginTop={3} alignItems={"center"} width={"100%"} padding={2}>
                     <Stack space={4} width={"75%"}>
                       <Botao
@@ -94,7 +156,6 @@ export function Cadastro({ navigation }: Props) {
                         _text={{ fontSize: "lg" }}
                         bg={"teal.500"}
                         onPress={handleSubmit}
-                      // onPress={() => avanacarSecao()}
                       >
                         Próximo
                       </Botao>
@@ -131,41 +192,10 @@ export function Cadastro({ navigation }: Props) {
                   </Checkbox>
                 );
               })}
-            {/* <Box marginTop={3} alignItems={"center"} width={"100%"} padding={2}>
-              <Stack space={4} width={"75%"}>
-                <Botao
-                  borderRadius={40}
-                  _text={{ fontSize: "lg" }}
-                  bg={"teal.500"}
-                  onPress={() => avanacarSecao()}
-                >
-                  Próximo
-                </Botao>
-                {numSecao > 0 ? (
-                  <Button
-                    borderRadius={40}
-                    _text={{ fontSize: "lg" }}
-                    bg={"green.500"}
-                    onPress={() => voltarSesao()}
-                  >
-                    Voltar
-                  </Button>
-                ) : (
-                  <Button
-                    borderRadius={40}
-                    _text={{ fontSize: "lg" }}
-                    bg={"green.500"}
-                    onPress={() => navigation.navigate("Login")}
-                  >
-                    Login
-                  </Button>
-                )}
-              </Stack>
-            </Box> */}
           </Box>
         </Box>
       </VStack>
-    </ImagemFundo>
+    </ImagemFundo >
   );
 }
 const styles = StyleSheet.create({
