@@ -41,14 +41,14 @@ export function Cadastro({ navigation }: Props) {
   function voltarSesao() {
     setNumSecao(numSecao - 1);
   }
-  const cadastroUsuario = async (nomeUsuarioParam: string, sobreNomeParam: string, matriculaParam: number, senhaParam: string): Promise<Boolean | void> => {
+  const cadastroUsuario = async (nomeUsuarioParam: string, sobreNomeParam: string, matriculaParam: number, senhaParam: string, email: string): Promise<Boolean | void> => {
     const url = "http://192.168.18.6:8084/api/v1/cadastro";
 
     const requestBody: CadastroRequest = {
       nomeUsuario: nomeUsuarioParam + " " + sobreNomeParam,
       senhaUsuario: senhaParam,
       numeroMatriculaPessoa: matriculaParam,
-      email: ""
+      email: email
 
     };
 
@@ -79,9 +79,9 @@ export function Cadastro({ navigation }: Props) {
 
   }
 
-  const verificarUsuario = async (newUsuario: string, newSobreNome: string, newMatricula: string, newSenha: string) => {
+  const verificarUsuario = async (newUsuario: string, newSobreNome: string, newMatricula: string, newSenha: string, newEmail: string) => {
     setShowLoading(true)
-    const response = await cadastroUsuario(newUsuario, newSobreNome, Number(newMatricula), newSenha)
+    const response = await cadastroUsuario(newUsuario, newSobreNome, Number(newMatricula), newSenha, newEmail)
 
 
     if (response) {
@@ -102,7 +102,8 @@ export function Cadastro({ navigation }: Props) {
       confirmarSenhaUsuario: Yup.string().required("Campo obrigatório"),
     }),
     Yup.object().shape({
-      numeroMatriculaPessoa: Yup.string().required("Campo obrigatório"),
+      email: Yup.string().email("Ensira um email valido").required("Campo obrigatório"),
+      numeroMatriculaPessoa: Yup.string().min(6, "Minimo 6 numeros").max(7, "Maximo 7 numeros").matches(/^\d+$/, 'O campo deve conter apenas números').required("Campo obrigatório"),
     })
   ];
   return (
@@ -123,12 +124,13 @@ export function Cadastro({ navigation }: Props) {
                 senhaUsuario: "",
                 confirmarSenhaUsuario: "",
                 numeroMatriculaPessoa: "",
+                email: ""
               }}
               validationSchema={SchemasCadastro[numSecao]}
               onSubmit={(values) => {
                 avanacarSecao()
                 if (numSecao == secoes.length - 1) {
-                  verificarUsuario(values.nomeUsuario, values.sobrenomeUsuario, values.numeroMatriculaPessoa, values.senhaUsuario)
+                  verificarUsuario(values.nomeUsuario, values.sobrenomeUsuario, values.numeroMatriculaPessoa, values.senhaUsuario, values.email)
                 }
               }}
             >
@@ -183,15 +185,6 @@ export function Cadastro({ navigation }: Props) {
                 </View>
               )}
             </Formik>
-
-            {numSecao == 2 &&
-              secoes[2].checkbox.map((check) => {
-                return (
-                  <Checkbox key={check.id} value={check.value}>
-                    {check.value}
-                  </Checkbox>
-                );
-              })}
           </Box>
         </Box>
       </VStack>

@@ -8,9 +8,11 @@ interface InputsProps {
   width?: string;
   disabled?: boolean;
   value?: string;
-  onChangeText?: (text: any) => void;
-  onBlur?: (text: any) => void
-  errorMessage?: string
+  onChangeText: (text: any) => void;
+  onBlur?: (text: any) => void;
+  mascara?: boolean;
+  errorMessage?: string;
+  tipoMascara: "00.00.00" | "000.000.0";
 
 }
 export function EntradaDeTexto({
@@ -21,9 +23,11 @@ export function EntradaDeTexto({
   disabled,
   value,
   onChangeText,
+
   onBlur,
   errorMessage
 }: InputsProps) {
+
   return (
     <FormControl isInvalid={!!errorMessage} width={"100%"} mt={3} >
       {label && (
@@ -35,21 +39,22 @@ export function EntradaDeTexto({
         placeholder={placeholder}
         size="lg"
         isDisabled={disabled}
-        w={width == " " ? "100%" : width}
+        w={width === " " ? "100%" : width}
         borderRadius="lg"
         value={value}
         secureTextEntry={segureTextEntry}
         bgColor="gray.100"
         shadow={5}
-        onChangeText={onChangeText}
+        onChangeText={onChangeText} // Usa o onChangeText padrão
         onBlur={onBlur}
         borderColor={errorMessage ? "red.500" : "gray.300"}
       />
       {errorMessage && (
-        <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon ></WarningOutlineIcon>}>
+        <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon />}>
           {errorMessage}
         </FormControl.ErrorMessage>
       )}
+
     </FormControl>
   );
 }

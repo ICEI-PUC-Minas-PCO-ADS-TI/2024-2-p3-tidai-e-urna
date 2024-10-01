@@ -44,9 +44,15 @@ const secoes = [
       {
         id: 1,
         label: "Numero Matricula",
-        placeholder: "Digite seu numero de matricula",
+        placeholder: "Digite seu numero de matricula/Pessoa",
         nameYup:"numeroMatriculaPessoa"
       },
+      {
+        id:2,
+        label: "E-mail",
+        placeholder: "Digite um email",
+        nameYup:"email"
+      }
     ],
     checkbox: [
       {
