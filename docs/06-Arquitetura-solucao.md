@@ -75,19 +75,19 @@ CREATE TABLE Voto (
 
 ## Tecnologias
 
-> **Mobile App (Frontend):**
+**Mobile App (Frontend):**
 React Native: Framework para desenvolvimento de aplicativos móveis multiplataforma.
 TypeScript: Linguagem de programação que adiciona tipagem estática ao JavaScript.
-> **Backend API:**
+**Backend API:**
 Spring Boot: Framework para criação de aplicações Java com configuração mínima.
 Java + Jakarta EE: Plataforma para desenvolvimento de aplicações empresariais.
-> **Business Logic:**
+**Business Logic:**
 Java + Lombok: facilita a criação de código repetitivo, especialmente em classes JavaBeans.
-> **Data Access Layer:**
+**Data Access Layer:**
 JPA/Hibernate: Frameworks para mapeamento objeto-relacional (ORM).
-> **Database:**
+**Database:**
 MySQL WorkBench: Sistema de gerenciamento de banco de dados 
-> **Documentação:**
+**Documentação:**
 Swagger: Ferramenta para documentação e teste de APIs.
 
 
