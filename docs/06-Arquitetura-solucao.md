@@ -55,7 +55,23 @@ CREATE TABLE Candidato (
     FOREIGN KEY (pleito_id) REFERENCES Pleito(id) ON DELETE CASCADE
 );
 
+CREATE TABLE Votos_Candidato (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    numero_candidato VARCHAR(100) NOT NULL,
+    pleito_id INT,
+    FOREIGN KEY (pleito_id) REFERENCES Pleito(id) ON DELETE CASCADE
+    FOREIGN KEY ( numero_candidato) REFERENCES Candidato(numero_candidato) ON DELETE CASCADE
 
+);
+
+CREATE TABLE Candidato_Pleito (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    numero_candidato VARCHAR(100) NOT NULL,
+    pleito_id BIGINT NOT NULL,
+    FOREIGN KEY (pleito_id) REFERENCES Pleito(id) ON DELETE CASCADE,
+    FOREIGN KEY (numero_candidato) REFERENCES Candidato(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id) ON DELETE CASCADE
+);
 
 CREATE TABLE Voto (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
