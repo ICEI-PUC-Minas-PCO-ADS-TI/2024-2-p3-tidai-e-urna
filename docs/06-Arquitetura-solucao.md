@@ -89,6 +89,7 @@ CREATE TABLE Voto (
   
 **Database:**
 - MySQL WorkBench: Sistema de gerenciamento de banco de dados
+- SpringData: FrameWork para conexão com o banco de dados
   
 **Documentação:**
 - Swagger: Ferramenta para documentação e teste de APIs.
@@ -98,7 +99,7 @@ CREATE TABLE Voto (
 | ---            | ---             |
 | Front-end      | TypeScript + React Native |
 | Back-end       | Spring Boot + Java + Jakarta EE + Lombok  |
-| SGBD           | MySQL           |
+| SGBD           | MySQL + SpringData           |
 | Documentação   | Swagger
 | Deploy         | Vercel          |
 
