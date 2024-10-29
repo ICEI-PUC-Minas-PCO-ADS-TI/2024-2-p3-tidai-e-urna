@@ -2,9 +2,7 @@
 
 <span style="color:red">Pré-requisitos: <a href="04-Projeto-interface.md"> Projeto de interface</a></span>
 
-Definição de como o software é estruturado em termos dos componentes que fazem parte da solução e do ambiente de hospedagem da aplicação.
-
-![Arquitetura da Solução](images/arquitetura.png)
+![Arquitetura da Solução](images/ArquiteturaSolução.PNG)
 
 ## Diagrama de classes
 
@@ -103,6 +101,11 @@ CREATE TABLE Voto (
 | SGBD           | MySQL           |
 | Documentação   | Swagger
 | Deploy         | Vercel          |
+
+
+**Imagem Arquitetura da Solução**
+
+![Arquitetura da Solução](images/ArquiteturaSolução.PNG)
 
 
 ## Hospedagem
