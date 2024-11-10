@@ -44,12 +44,12 @@ Liste todas as ferramentas que foram empregadas no projeto, justificando a escol
 
 Exemplo: os artefatos do projeto são desenvolvidos a partir de diversas plataformas e a relação dos ambientes com seu respectivo propósito é apresentada na tabela que se segue.
 
-| Ambiente                    | Plataforma         | Link de acesso |
-| --------------------------- | ------------------ | -------------- |
-| Repositório de código fonte | GitHub             |  https://github.com/ICEI-PUC-Minas-PCO-ADS-TI/2024-2-p3-tidai-e-urna  |
-| Documentos do projeto       | GitHub             |  https://github.com/ICEI-PUC-Minas-PCO-ADS-TI/2024-2-p3-tidai-e-urna/tree/main/docs   |
-| Projeto de interface        | Figma              |  https://www.figma.com/design/B2G3tuAJBz8MuSVRO11aBT/Untitled?node-id=2-4&node-type=canvas&t=VfsXNecvqGsUASoq-0   |
-| Gerenciamento do projeto    | GitHub Projects    | https://www.figma.com/design/B2G3tuAJBz8MuSVRO11aBT/Untitled?node-id=2-4&node-type=canvas&t=VfsXNecvqGsUASoq-0    |
-| Hospedagem                  | Vercel             | Em processo...    |
-| Editor de código-fonte      | Visual Studio Code | https://code.visualstudio.com/   |
-| Testes de APIS              | Postman            | https://www.postman.com/    |
+| Ambiente                    | Plataforma         | Link de acesso                                                                                                   |
+| --------------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| Repositório de código fonte | GitHub             |  https://github.com/ICEI-PUC-Minas-PCO-ADS-TI/2024-2-p3-tidai-e-urna                                             |
+| Documentos do projeto       | GitHub             |  https://github.com/ICEI-PUC-Minas-PCO-ADS-TI/2024-2-p3-tidai-e-urna/tree/main/docs                              |
+| Projeto de interface        | Figma              |  https://www.figma.com/design/B2G3tuAJBz8MuSVRO11aBT/Untitled?node-id=2-4&node-type=canvas&t=VfsXNecvqGsUASoq-0  |
+| Gerenciamento do projeto    | GitHub Projects    | https://www.figma.com/design/B2G3tuAJBz8MuSVRO11aBT/Untitled?node-id=2-4&node-type=canvas&t=VfsXNecvqGsUASoq-0   |
+| Hospedagem                  | Vercel             | Em processo...                                                                                                   |
+| Editor de código-fonte      | Visual Studio Code | https://code.visualstudio.com/                                                                                   |
+| Testes de APIS              | Postman            | https://www.postman.com/                                                                                         |
