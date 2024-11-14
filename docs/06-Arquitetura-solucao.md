@@ -2,105 +2,127 @@
 
 <span style="color:red">Pré-requisitos: <a href="04-Projeto-interface.md"> Projeto de interface</a></span>
 
-Definição de como o software é estruturado em termos dos componentes que fazem parte da solução e do ambiente de hospedagem da aplicação.
-
-![Arquitetura da Solução](images/arquitetura.png)
+![Arquitetura da Solução](images/ArquiteturaSolução.PNG)
 
 ## Diagrama de classes
 
-O diagrama de classes ilustra graficamente a estrutura do software e como cada uma das classes estará interligada. Essas classes servem de modelo para materializar os objetos que serão executados na memória.
-
-> **Links úteis**:
-> - [Diagramas de classes - documentação da IBM](https://www.ibm.com/docs/pt-br/rational-soft-arch/9.7.0?topic=diagrams-class)
-> - [O que é um diagrama de classe UML?](https://www.lucidchart.com/pages/pt/o-que-e-diagrama-de-classe-uml)
+![Diagrama de Classes E-Urna](images/Diagrama_de_Classes_Eurna.drawio.png)
 
 ##  Modelo de dados
 
-O desenvolvimento da solução proposta requer a existência de bases de dados que permitam realizar o cadastro de dados e os controles associados aos processos identificados, assim como suas recuperações.
+>**Modelo Entidade Relacionamento**
 
-Utilizando a notação do DER (Diagrama Entidade-Relacionamento), elabore um modelo, usando alguma ferramenta, que contemple todas as entidades e atributos associados às atividades dos processos identificados. Deve ser gerado um único DER que suporte todos os processos escolhidos, visando, assim, uma base de dados integrada. O modelo deve contemplar também o controle de acesso dos usuários (partes interessadas nos processos) de acordo com os papéis definidos nos modelos do processo de negócio.
+![MER E-Urna](images/MER_Eurna.PNG)
 
-Apresente o modelo de dados por meio de um modelo relacional que contemple todos os conceitos e atributos apresentados na modelagem dos processos.
 
 ### Modelo ER
 
-O Modelo ER representa, por meio de um diagrama, como as entidades (coisas, objetos) se relacionam entre si na aplicação interativa.
-
-> **Links úteis**:
-> - [Como fazer um diagrama entidade relacionamento](https://www.lucidchart.com/pages/pt/como-fazer-um-diagrama-entidade-relacionamento)
-
-### Esquema relacional
-
-O Esquema Relacional corresponde à representação dos dados em tabelas juntamente com as restrições de integridade e chave primária.
  
 
-![Exemplo de um modelo relacional](images/modelo_relacional.png "Exemplo de modelo relacional.")
----
+![DER E-Urna](images/ER_EUrna.png)
 
-> **Links úteis**:
-> - [Criando um modelo relacional - documentação da IBM](https://www.ibm.com/docs/pt-br/cognos-analytics/12.0.0?topic=designer-creating-relational-model)
 
 ### Modelo físico
 
-Insira aqui o script de criação das tabelas do banco de dados.
 
-Veja um exemplo:
 
 ```sql
--- Criação da tabela Medico
-CREATE TABLE Medico (
-    MedCodigo INTEGER PRIMARY KEY,
-    MedNome VARCHAR(100)
+CREATE TABLE Usuario (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    num_matricula BIGINT UNIQUE NOT NULL,
+    email VARCHAR(255),
+    senha VARCHAR(255) NOT NULL,
+    curso VARCHAR(255)
 );
 
--- Criação da tabela Paciente
-CREATE TABLE Paciente (
-    PacCodigo INTEGER PRIMARY KEY,
-    PacNome VARCHAR(100)
+CREATE TABLE Pleito (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome_pleito VARCHAR(100) NOT NULL,
+    status ENUM('ATIVO', 'ENCERRADO') NOT NULL,
+    data_inicio DATE,
+    data_termino DATE,
+    votos_totais INT NOT NULL
 );
 
--- Criação da tabela Consulta
-CREATE TABLE Consulta (
-    ConCodigo INTEGER PRIMARY KEY,
-    MedCodigo INTEGER,
-    PacCodigo INTEGER,
-    Data DATE,
-    FOREIGN KEY (MedCodigo) REFERENCES Medico(MedCodigo),
-    FOREIGN KEY (PacCodigo) REFERENCES Paciente(PacCodigo)
+
+CREATE TABLE Candidato (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    curso VARCHAR(100),
+    numero_candidato BIGINT NOT NULL UNIQUE,
+    pleito_id BIGINT NOT NULL,
+    FOREIGN KEY (pleito_id) REFERENCES Pleito(id) ON DELETE CASCADE
 );
 
--- Criação da tabela Medicamento
-CREATE TABLE Medicamento (
-    MdcCodigo INTEGER PRIMARY KEY,
-    MdcNome VARCHAR(100)
+CREATE TABLE Votos_Candidato (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    numero_candidato VARCHAR(100) NOT NULL,
+    pleito_id INT,
+    FOREIGN KEY (pleito_id) REFERENCES Pleito(id) ON DELETE CASCADE
+    FOREIGN KEY ( numero_candidato) REFERENCES Candidato(numero_candidato) ON DELETE CASCADE
+
 );
 
--- Criação da tabela Prescricao
-CREATE TABLE Prescricao (
-    ConCodigo INTEGER,
-    MdcCodigo INTEGER,
-    Posologia VARCHAR(200),
-    PRIMARY KEY (ConCodigo, MdcCodigo),
-    FOREIGN KEY (ConCodigo) REFERENCES Consulta(ConCodigo),
-    FOREIGN KEY (MdcCodigo) REFERENCES Medicamento(MdcCodigo)
+CREATE TABLE Candidato_Pleito (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    numero_candidato VARCHAR(100) NOT NULL,
+    pleito_id BIGINT NOT NULL,
+    FOREIGN KEY (pleito_id) REFERENCES Pleito(id) ON DELETE CASCADE,
+    FOREIGN KEY (numero_candidato) REFERENCES Candidato(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Voto (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    numero_votos INT,
+    data_registro DATE,
+    numero_candidato BIGINT NOT NULL,
+    usuario_id BIGINT NOT NULL,
+    pleito_id BIGINT NOT NULL,
+    FOREIGN KEY (pleito_id) REFERENCES Pleito(id) ON DELETE CASCADE,
+    FOREIGN KEY (numero_candidato) REFERENCES Candidato(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 ```
-Esse script deverá ser incluído em um arquivo .sql na pasta [de scripts SQL](../src/db).
 
 
 ## Tecnologias
 
-Descreva qual(is) tecnologias você vai usar para resolver o seu problema, ou seja, implementar a sua solução. Liste todas as tecnologias envolvidas, linguagens a serem utilizadas, serviços web, frameworks, bibliotecas, IDEs de desenvolvimento, e ferramentas.
-
-Apresente também uma figura explicando como as tecnologias estão relacionadas ou como uma interação do usuário com o sistema vai ser conduzida, por onde ela passa até retornar uma resposta ao usuário.
+**Mobile App (Frontend):**
+- React Native: Framework para desenvolvimento de aplicativos móveis multiplataforma.
+- TypeScript: Linguagem de programação que adiciona tipagem estática ao JavaScript.
+  
+**Backend API:**
+- Spring Boot: Framework para criação de aplicações Java com configuração mínima.
+- Java + Jakarta EE: Plataforma para desenvolvimento de aplicações empresariais.
+  
+**Business Logic:**
+- Java + Lombok: facilita a criação de código repetitivo, especialmente em classes JavaBeans.
+  
+**Data Access Layer:**
+- JPA/Hibernate: Frameworks para mapeamento objeto-relacional (ORM).
+  
+**Database:**
+- MySQL WorkBench: Sistema de gerenciamento de banco de dados
+- SpringData: FrameWork para conexão com o banco de dados
+  
+**Documentação:**
+- Swagger: Ferramenta para documentação e teste de APIs.
 
 
 | **Dimensão**   | **Tecnologia**  |
 | ---            | ---             |
-| Front-end      | HTML + CSS + JS + React |
-| Back-end       | Node.js         |
-| SGBD           | MySQL           |
+| Front-end      | TypeScript + React Native |
+| Back-end       | Spring Boot + Java + Jakarta EE + Lombok  |
+| SGBD           | MySQL + SpringData           |
+| Documentação   | Swagger
 | Deploy         | Vercel          |
+
+
+**Imagem Arquitetura da Solução**
+
+![Arquitetura da Solução](images/ArquiteturaSolução.PNG)
 
 
 ## Hospedagem
