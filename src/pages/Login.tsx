@@ -30,7 +30,7 @@ export function Login({ navigation }: Props2) {
 
 
   const login = async (matriculaParam: number, senhaParam: string): Promise<Boolean | void> => {
-    const url = "http://192.168.18.6:8084/api/v1/login";
+    const url = "https://e-urna-back.onrender.com/usuario/login";
 
     const requestBody: LoginRequest = {
       numeroMatriculaPessoa: matriculaParam,

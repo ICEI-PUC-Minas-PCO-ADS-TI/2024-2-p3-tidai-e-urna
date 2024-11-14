@@ -35,7 +35,7 @@ NumCoordenador int not null,
 foreign key (NumCoordenador) references Coordenador (NumPessoa)
 );
 
-create table Votos_por_Candidato(
+create table Voto(
 Id int not null,
 MatriculaCandidato int not null,
 NomeCandidato varchar (45),

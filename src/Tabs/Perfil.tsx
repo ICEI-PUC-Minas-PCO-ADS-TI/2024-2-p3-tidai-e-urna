@@ -22,6 +22,10 @@ const itemsMenu = [
   {
     nome: "Editar Pleito",
     navigation: "EditarPleito"
+  },
+  {
+    nome: "Visualizar relatórios",
+    navigation: "BuscarRelatorio"
   }
 ];
 

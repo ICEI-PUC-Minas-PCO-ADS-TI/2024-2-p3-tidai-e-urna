@@ -100,7 +100,7 @@ export default function CriarPleito() {
             onConfirm={handleConfirmTermino}
             onCancel={hideDatePicker}
           />
-          <Titulo>CriarPleito</Titulo>
+          <Titulo>Criar Pleito</Titulo>
           <BoxCampForm>
             <EntradaDeTexto
               label="Curso"
@@ -210,8 +210,8 @@ export default function CriarPleito() {
                   )}
                   keyExtractor={(item) => item}
                 />
-                <Button onPress={onClose} mt={4}>
-                  Teste
+                <Button bg={"green.500"} onPress={onClose} mt={4}>
+                  Enviar
                 </Button>
               </Actionsheet.Content>
             </Actionsheet>

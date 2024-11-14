@@ -4,7 +4,6 @@ import { Formik } from "formik";
 import {
   Box,
   Button,
-  Checkbox,
   Stack,
   VStack
 } from "native-base";
@@ -25,6 +24,7 @@ interface CadastroRequest {
   senhaUsuario: string,
   numeroMatriculaPessoa: string,
   email: string,
+  curso: string
 }
 
 export function Cadastro({ navigation }: Props) {
@@ -41,47 +41,41 @@ export function Cadastro({ navigation }: Props) {
   function voltarSesao() {
     setNumSecao(numSecao - 1);
   }
-  const cadastroUsuario = async (nomeUsuarioParam: string, sobreNomeParam: string, matriculaParam: number, senhaParam: string, email: string): Promise<Boolean | void> => {
-    const url = "http://192.168.18.6:8084/api/v1/cadastro";
+  const cadastroUsuario = async (nomeUsuarioParam: string, sobreNomeParam: string, matriculaParam: number, senhaParam: string, email: string, curso: string): Promise<Boolean | void> => {
+    const url = "https://e-urna-back.onrender.com/usuario/cadastro";
 
     const requestBody: CadastroRequest = {
       nomeUsuario: nomeUsuarioParam + " " + sobreNomeParam,
       senhaUsuario: senhaParam,
-      numeroMatriculaPessoa: matriculaParam,
-      email: email
+      numeroMatriculaPessoa: matriculaParam.toString(),
+      email: email,
+      curso: curso
 
     };
-
-
-
     try {
       const response: AxiosResponse<CadastroRequest> = await axios.post(url, requestBody, { timeout: 5000 }); // Tempo limite de 5 segundos
       console.log('Cadastro bem-sucedido:', response.data);
 
-      return true; // Retorna o token ou dados de sucesso
+      return true;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Se o erro for de Axios, você pode acessar mais informações
         console.error('Erro de Axios:', error.message);
         if (error.response) {
-          // A requisição foi feita e o servidor respondeu com um código de status
           console.error('Status:', error.response.status);
           console.error('Dados:', error.response.data);
         } else if (error.request) {
-          // A requisição foi feita, mas não houve resposta
           console.error('Erro de requisição:', error.request);
         }
       } else {
-        // Para outros erros que não são de Axios
         console.error('Erro não relacionado ao Axios:', error);
       }
     }
 
   }
 
-  const verificarUsuario = async (newUsuario: string, newSobreNome: string, newMatricula: string, newSenha: string, newEmail: string) => {
+  const verificarUsuario = async (newUsuario: string, newSobreNome: string, newMatricula: string, newSenha: string, newEmail: string, curso: string) => {
     setShowLoading(true)
-    const response = await cadastroUsuario(newUsuario, newSobreNome, Number(newMatricula), newSenha, newEmail)
+    const response = await cadastroUsuario(newUsuario, newSobreNome, Number(newMatricula), newSenha, newEmail, curso)
 
 
     if (response) {
@@ -98,8 +92,11 @@ export function Cadastro({ navigation }: Props) {
       sobrenomeUsuario: Yup.string().required("Campo obrigatório"),
     }),
     Yup.object().shape({
-      senhaUsuario: Yup.string().required("Campo obrigatório"),
-      confirmarSenhaUsuario: Yup.string().required("Campo obrigatório"),
+      senhaUsuario: Yup.string()
+        .required("Campo obrigatório"),
+      confirmarSenhaUsuario: Yup.string()
+        .required("Campo obrigatório")
+        .oneOf([Yup.ref('senhaUsuario'), null], 'As senhas não coincidem'),
     }),
     Yup.object().shape({
       email: Yup.string().email("Ensira um email valido").required("Campo obrigatório"),
@@ -124,13 +121,14 @@ export function Cadastro({ navigation }: Props) {
                 senhaUsuario: "",
                 confirmarSenhaUsuario: "",
                 numeroMatriculaPessoa: "",
-                email: ""
+                email: "",
+                curso: ""
               }}
               validationSchema={SchemasCadastro[numSecao]}
               onSubmit={(values) => {
                 avanacarSecao()
                 if (numSecao == secoes.length - 1) {
-                  verificarUsuario(values.nomeUsuario, values.sobrenomeUsuario, values.numeroMatriculaPessoa, values.senhaUsuario, values.email)
+                  verificarUsuario(values.nomeUsuario, values.sobrenomeUsuario, values.numeroMatriculaPessoa, values.senhaUsuario, values.email, values.curso)
                 }
               }}
             >

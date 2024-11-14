@@ -9,6 +9,7 @@ interface CardaoEleicaoProps {
   id: number;
   quantidade: number;
   dataVencimento: string
+  status: string
 }
 
 const imagemPathPuc = require("../../assets/puc.jpg");
@@ -51,7 +52,8 @@ export function Example({
   periodoCurso,
   id,
   quantidade,
-  dataVencimento
+  dataVencimento,
+  status
 }: CardaoEleicaoProps) {
   const navigation = useNavigation();
 
@@ -61,13 +63,14 @@ export function Example({
   return (
     <Pressable onPress={() => goToPleito(id)}>
       <Box borderBottomLeftRadius={40} bg={"blue.400"} p={3} flexDir={"row"} w={"100%"} mt={2}>
-        <Box w={"50%"} >
+        <Box w={"70%"} >
           <Text fontSize={20} color={"white"}>{nomeCurso}</Text>
-          <Text>{periodoCurso + " " + "Periodo"}</Text>
-          <Text>{"Numero candidatos " + " " + quantidade}</Text>
-          <Text>{dataVencimento}</Text>
+          <Text>{periodoCurso}</Text>
+          <Text>{"Numero de candidatos candidatos " + " " + quantidade}</Text>
+          <Text>{"Data vencimento:" + " " + dataVencimento}</Text>
+          <Text>{"Situação" + " " + status}</Text>
         </Box>
-        <Box w={"50%"} alignItems={"flex-end"}>< Avatar w={20} h={20} source={imagemPathPuc}></Avatar></Box>
+        <Box w={"30%"} alignItems={"flex-end"}>< Avatar w={20} h={20} source={imagemPathPuc}></Avatar></Box>
       </Box>
 
 

@@ -179,8 +179,8 @@ export default function EditarPleito() {
                           )}
                           keyExtractor={(item) => item}
                         />
-                        <Button onPress={onClose} mt={4}>
-                          Teste
+                        <Button bg={"green.400"} onPress={onClose} mt={4}>
+                          Enviar
                         </Button>
                       </Actionsheet.Content>
                     </Actionsheet>

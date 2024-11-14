@@ -52,6 +52,12 @@ const secoes = [
         label: "E-mail",
         placeholder: "Digite um email",
         nameYup:"email"
+      },
+      {
+        id:3,
+        label: "Curso",
+        placeholder: "Digite o cruso",
+        nameYup:"curso"
       }
     ],
     checkbox: [
