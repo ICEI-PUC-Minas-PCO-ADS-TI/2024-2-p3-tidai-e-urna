@@ -1,13 +1,10 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
 import Tabs from "../Tabs";
 import { Cadastro } from "../pages/Cadastro";
+import CriarPleito from "../pages/CriarPleito";
 import { Login } from "../pages/Login";
 import Pleito from "../pages/Pleito";
-import EditarPerfil from "../pages/EditarPerfil";
-import CadastroCandidato from "../pages/CadastroCandidato";
-import CriarPleito from "../pages/CriarPleito";
 
 const Tab = createNativeStackNavigator();
 

@@ -9,23 +9,31 @@ import {
 } from "native-base";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { Botao } from "../Componentes/Botao/Botao";
 import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
 import IconLoading from "../Componentes/IconLoading/IconLoading";
 import { Titulo } from "../Componentes/Titulo/Titulo";
+import { login as loginAction } from '../redux/slices/userSlice'; // Ajuste o caminho conforme sua estrutura
+import { AppDispatch, RootState } from "../redux/store";
 import { Props2 } from "../router/TypesRoutes";
 
 
+interface IUsuarioVo {
+  id: string | null;
+  nomeUsuario: string | null;
+  curso: string | null;
+  tipoUsuarioEnum: string | null;
+}
 interface LoginRequest {
   numeroMatriculaPessoa: string,
   senhaUsuario: string
 }
-interface LoginResponse {
-  token: string
-}
-export function Login({ navigation }: Props2) {
 
+export function Login({ navigation }: Props2) {
+  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: RootState) => state.user)
   const [showLoading, setShowLoading] = useState(false)
 
 
@@ -37,13 +45,19 @@ export function Login({ navigation }: Props2) {
       senhaUsuario: senhaParam
 
     };
-    console.log(requestBody)
 
-
+    console.log("CONFERIR STATUS", user)
 
     try {
-      const response: AxiosResponse<LoginResponse> = await axios.post(url, requestBody, { timeout: 5000 }); // Tempo limite de 5 segundos
+      const response: AxiosResponse<IUsuarioVo> = await axios.post(url, requestBody, { timeout: 5000 }); // Tempo limite de 5 segundos
       console.log('Login bem-sucedido:', response.data);
+      const data = {
+        id: response.data.id,
+        nomeUsuario: response.data.nomeUsuario,
+        curso: response.data.curso,
+        tipoUsuarioEnum: response.data.tipoUsuarioEnum
+      }
+      dispatch(loginAction(data))
 
       return true; // Retorna o token ou dados de sucesso
     } catch (error) {
@@ -69,6 +83,7 @@ export function Login({ navigation }: Props2) {
   const verificacaoLogin = async (matricula: string, senha: string) => {
     const response = await login(Number(matricula), senha)
     if (response) {
+      console.log("RESPONSE", response)
       navigation.navigate('Tabs')
     }
     setShowLoading(false)

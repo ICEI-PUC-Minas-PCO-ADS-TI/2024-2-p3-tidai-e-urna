@@ -1,3 +1,5 @@
+import { logout } from "@/src/redux/slices/userSlice";
+import { AppDispatch } from "@/src/redux/store";
 import { TabParamList } from "@/src/Tabs";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
@@ -8,14 +10,31 @@ import {
   Text,
   useDisclose,
 } from "native-base";
+import { useDispatch } from "react-redux";
 
 interface DropdownPros {
   nomeBotao?: string;
   opcoesInputs: { nome: string; navigation: keyof TabParamList }[];
 }
 export default function Dropdown({ nomeBotao, opcoesInputs }: DropdownPros) {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigaiton = useNavigation()
   const rotasNavigation = useNavigation<NavigationProp<TabParamList>>();
   const { isOpen, onOpen, onClose } = useDisclose();
+
+  const modificarPage = (router: string) => {
+    if (router === "Login") {
+      deslogar()
+      navigaiton.navigate(router)
+    } else {
+      rotasNavigation.navigate(router)
+    }
+
+  }
+
+  const deslogar = () => {
+    dispatch(logout())
+  }
   return (
     <Center>
       <Button bg={"darkBlue.800"} onPress={onOpen}>
@@ -41,7 +60,7 @@ export default function Dropdown({ nomeBotao, opcoesInputs }: DropdownPros) {
           {opcoesInputs &&
             opcoesInputs.map((opcao) => (
               <Actionsheet.Item
-                onPress={() => rotasNavigation.navigate(opcao.navigation)}
+                onPress={() => modificarPage(opcao.navigation)}
               >
                 <Text>{opcao.nome}</Text>
               </Actionsheet.Item>

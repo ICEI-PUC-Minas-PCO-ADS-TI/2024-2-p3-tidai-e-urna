@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Relatorio from "../Componentes/Relatorio/Relatorio";
+import BuscarRelatorio from "../pages/BuscarRelatorio";
 import CadastroCandidato from "../pages/CadastroCandidato";
 import CriarPleito from "../pages/CriarPleito";
 import EditarPerfil from "../pages/EditarPerfil";
@@ -9,7 +9,6 @@ import Pleito from "../pages/Pleito";
 import Perfil from "./Perfil";
 import Pesquisar from "./Pesquisar";
 import Principal from "./Principal";
-import BuscarRelatorio from "../pages/BuscarRelatorio";
 
 export type TabParamList = {
   Principal: undefined;

@@ -3,17 +3,33 @@ import {
   ScrollView
 } from "native-base";
 import { StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 import AvatarPerfil from "../Componentes/Avatar/AvatarPerfil";
 import Dropdown1 from "../Componentes/Dropdowns/Dropdown1";
+import { RootState } from "../redux/store";
 
-const itemsMenu = [
-  {
-    nome: "Criar Pleito",
-    navigation: "CriarPleito",
-  },
+const itemsMenuAluno = [
   {
     nome: "Editar perfil ",
     navigation: "EditarPerfil",
+  },
+  {
+    nome: "Visualizar relatórios",
+    navigation: "BuscarRelatorio"
+  },
+  {
+    nome: "Sair do App",
+    navigation: "Login"
+  }
+];
+const itemsMenuAdmin = [
+  {
+    nome: "Editar perfil ",
+    navigation: "EditarPerfil",
+  },
+  {
+    nome: "Criar Pleito",
+    navigation: "CriarPleito",
   },
   {
     nome: "Cadastrar candidatos em um pleito",
@@ -23,18 +39,20 @@ const itemsMenu = [
     nome: "Editar Pleito",
     navigation: "EditarPleito"
   },
+  ,
   {
-    nome: "Visualizar relatórios",
-    navigation: "BuscarRelatorio"
+    nome: "Sair do App",
+    navigation: "Login"
   }
-];
+]
 
 export default function Perfil() {
+  const user = useSelector((state: RootState) => state.user.tipoUsuarioEnum)
   return (
     <ImagemFundo>
       <ScrollView flex={1}>
         <AvatarPerfil></AvatarPerfil>
-        <Dropdown1 nomeBotao="Menu" opcoesInputs={itemsMenu}></Dropdown1>
+        <Dropdown1 nomeBotao="Menu" opcoesInputs={user === "ADMIN" ? itemsMenuAdmin : itemsMenuAluno}></Dropdown1>
       </ScrollView>
     </ImagemFundo>
   );
