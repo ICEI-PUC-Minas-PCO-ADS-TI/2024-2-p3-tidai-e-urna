@@ -47,7 +47,7 @@ As tabelas a seguir apresentam os requisitos funcionais e não funcionais que de
 
 | ID     | Descrição do Requisito                                                                               | Prioridade |
 | ------ | ---------------------------------------------------------------------------------------------------- | ---------- |
-| RF-001 | deve possuir uma página inicial                                                                      | MEDIA      |
+| RF-001 | deve possuir uma página inicial                                                                      | MÉDIA      |
 | RF-002 | Deve possuir uma página de login                                                                     | ALTA       |
 | RF-003 | Deve possuir uma página de cadastro de usuario                                                       | ALTA       |
 | RF-004 | Deve possuir uma pagina para cadastro de votação                                                     | ALTA       |
