@@ -1,61 +1,104 @@
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
-import { Actionsheet, Box, Button, CheckIcon, FlatList, FormControl, ScrollView, Select, Text, useDisclose } from "native-base";
-import { useState } from "react";
-import { GestureHandlerRootView, PanGestureHandler, TouchableOpacity } from "react-native-gesture-handler";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import axios, { AxiosResponse } from "axios";
+import { useNavigation } from "expo-router";
+import { Formik } from "formik";
+import { Box, CheckIcon, FormControl, ScrollView, Select } from "native-base";
+import { useEffect, useState } from "react";
+import { GestureHandlerRootView, PanGestureHandler } from "react-native-gesture-handler";
 import { Botao } from "../Componentes/Botao/Botao";
 import BoxCampForm from "../Componentes/BoxCampForm/BoxCampForm";
-import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
+import MenssagemExclusao from "../Componentes/MenssagemExclusao/MenssagemExclusao";
 import { Titulo } from "../Componentes/Titulo/Titulo";
-import { PleitoId } from "../service/PleitoService/PleitoService";
-import { pleitos } from "../utils/Eleicoes";
+import { IPleito } from "../Tabs/Principal";
 
 
 export default function EditarPleito() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [activeModal, setActiveModal] = useState<"start" | "end" | null>(null);
-  const [dateInicio, setdateInicio] = useState<Date>(new Date());
-  const [dateTermino, setDateTermino] = useState<Date | undefined>();
-
+  const navigation = useNavigation();
 
   const onGestureEvent = (event) => {
     console.log('Gesture event:', event.nativeEvent);
   };
+  const [pleitos, setPleitos] = useState<IPleito[]>()
+  const [menssagem, setMenssagem] = useState<Boolean>(false);
 
-
-  const showDatePicker = (modalType: "start" | "end") => {
-    setActiveModal(modalType);
-    setIsVisible(true);
-  };
-  const handleConfirmInicio = (selectedDate: Date) => {
-    setdateInicio(selectedDate);
-    hideDatePicker();
-  };
-
-  const hideDatePicker = () => {
-    setIsVisible(false);
-    setActiveModal(null);
-  };
-  const handleConfirmTermino = (selectedDate: Date) => {
-    if (selectedDate <= dateInicio) {
-      const newTerminoDate = new Date(dateInicio);
-      newTerminoDate.setDate(newTerminoDate.getDate() + 1);
-      setDateTermino(newTerminoDate);
-    }
-    setDateTermino(selectedDate);
-    hideDatePicker();
-  };
   const [pleitoSelect, setPleitoSelect] = useState("")
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [pleitoStatus, setPleitoStatus] = useState("")
 
-  const { isOpen, onOpen, onClose } = useDisclose();
-  const toggleItemSelection = (item: string) => {
-    setSelectedItems((prevSelectedItems) =>
-      prevSelectedItems.includes(item)
-        ? prevSelectedItems.filter((i) => i !== item)
-        : [...prevSelectedItems, item]
-    );
-  };
+  useEffect(() => {
+    const fetchPleito = async () => {
+      const url = "https://e-urna-back.onrender.com/pleito/pleitoAll";
+      try {
+        const response: AxiosResponse<IPleito[]> = await axios.get(url);
+        console.log('Requisição feita com sucesso PleitoAll:');
+        setPleitos(response.data)
+      } catch (error) {
+        console.error('Erro em fetchPleito:', error);
+      }
+    };
+    fetchPleito();
+  }, [])
+
+  const excluirPleito = async (id: number) => {
+    const url = `https://e-urna-back.onrender.com/pleito/removerPleito/${id}`;
+    console.log(id)
+    try {
+      const response: AxiosResponse = await axios.put(url, null, { timeout: 5000 }); // Tempo limite de 5 segundos
+      console.log('Exclusão bem-sucedido:', response.data);
+      setMenssagem(true)
+
+      setTimeout(() => {
+        setMenssagem(false)
+        navigation.navigate("Perfil")
+        setPleitoSelect("")
+      }, 5000);
+      return true;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Erro de Axios:', error.message);
+        if (error.response) {
+          console.error('Status:', error.response.status);
+          console.error('Dados:', error.response.data);
+        } else if (error.request) {
+          console.error('Erro de requisição:', error.request);
+        }
+      } else {
+        console.error('Erro não relacionado ao Axios:', error);
+      }
+    }
+
+    setMenssagem(true)
+    // setTimeout(() => {
+    //   navigation.navigate("Perfil")
+    //   setMenssagem(false)
+    // }, 3000);
+  }
+
+  const editarPleito = async (id: number) => {
+    const url = `https://e-urna-back.onrender.com/pleito/atualizarPleito/${id}`;
+    try {
+      const response: AxiosResponse = await axios.put(url, null, { timeout: 5000 }); // Tempo limite de 5 segundos
+      console.log('Modificação bem-sucedido:', response.data);
+      navigation.navigate("TelaVazia")
+      return true;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Erro de Axios:', error.message);
+        if (error.response) {
+          console.error('Status:', error.response.status);
+          console.error('Dados:', error.response.data);
+        } else if (error.request) {
+          console.error('Erro de requisição:', error.request);
+        }
+      } else {
+        console.error('Erro não relacionado ao Axios:', error);
+      }
+    }
+
+  }
+
+  const cancelarEdicacao = () => {
+    navigation.navigate("Perfil")
+  }
 
   return (
     <ImagemFundo>
@@ -63,139 +106,82 @@ export default function EditarPleito() {
         <GestureHandlerRootView style={{ flex: 1 }}>
           <PanGestureHandler onGestureEvent={onGestureEvent}>
             <Box style={{ flex: 1 }} alignItems={"center"}> {/* Envolva todos os elementos em um Box */}
-              <DateTimePickerModal
-                isVisible={isVisible && activeModal === "start"}
-                mode="date"
-                onConfirm={handleConfirmInicio}
-                onCancel={hideDatePicker}
-              />
-              <DateTimePickerModal
-                isVisible={isVisible && activeModal === "end"}
-                mode="date"
-                onConfirm={handleConfirmTermino}
-                onCancel={hideDatePicker}
-              />
               <Titulo>Editar Pleito</Titulo>
               <BoxCampForm>
                 <FormControl.Label _text={{ color: "black" }}>Buscar pleitos</FormControl.Label>
-                <Select
-                  selectedValue={pleitoSelect}
-                  minWidth="100"
-                  bg={"white"}
-                  accessibilityLabel="Choose Service"
-                  placeholder="Periodo"
-                  _selectedItem={{
-                    bg: "teal.600",
-                    endIcon: <CheckIcon size="5" />,
+                <Formik
+                  initialValues={{
+                    id: ""
                   }}
-                  mt={1}
-                  onValueChange={(pleito) => setPleitoSelect(pleito)}
+                  onSubmit={(values) => {
+                    console.log("VALUES", values.id)
+                    excluirPleito(Number(values.id))
+                  }}
                 >
-                  <Select.Item label="" value=""></Select.Item>
-                  {pleitos &&
-                    pleitos.map((pleito) => (
-                      <Select.Item label={pleito.nomeCurso + " " + pleito.periodoCurso + " Período"} value={`${pleito.id}`} />
-                    ))
-                  }
-                </Select>
-                {pleitoSelect != "" && pleitoSelect != null &&
-                  <Box >
-                    <Box flexDir={"column"} justifyContent={"center"} alignItems={"center"} w={"100%"}>
-                      <EntradaDeTexto
-                        width="100%"
-                        disabled={true}
-                        label="Data inicio"
-                        placeholder="Escolha a data"
-                        value={dateInicio.toLocaleDateString("pt-BR")}
-                      />
-                      <Botao
-                        _text={{ fontSize: 15 }}
-                        marginLeft={5}
-                        w={"100%"}
-                        h={10}
-                        mt={2}
-                        marginRight={5}
-                        bg="#000"
-                        onPress={() => showDatePicker("start")}
-                        borderRadius={10}
-                      >
-                        Selecionar data
-                      </Botao>
-                      <EntradaDeTexto
-                        width="100%"
-                        disabled={true}
-                        label="Data termino"
-                        placeholder="Escolha a data"
-                        value={
-                          dateTermino ? dateTermino.toLocaleDateString("pt-BR") : " "
-                        }
-                      />
-                      <Botao
-                        _text={{ fontSize: 15 }}
-                        marginLeft={5}
-                        w={"100%"}
-                        h={10}
-                        mt={2}
-                        marginRight={5}
-                        bg="#000"
-                        onPress={() => showDatePicker("end")}
-                        borderRadius={10}
-                      >
-                        Selecionar data
-                      </Botao>
-                    </Box>
-                    <FormControl.Label mt={3} _text={{ color: "black" }}>
-                      Candidatos
-                    </FormControl.Label>
-                    <TouchableOpacity onPress={onOpen}>
-                      <Box
-                        borderWidth={1}
-                        borderColor="gray.300"
-                        padding={3}
+                  {({ handleSubmit, setFieldValue, values, errors, touched }) => (
+                    <>
+                      <Select
+                        selectedValue={pleitoSelect}
+                        minWidth="100"
                         bg={"white"}
-                        borderRadius={5}
-                        width="100%"
+                        accessibilityLabel="Choose Service"
+                        placeholder="Pleitos"
+                        _selectedItem={{
+                          bg: "teal.600",
+                          endIcon: <CheckIcon size="5" />,
+                        }}
+                        mt={1}
+                        onValueChange={(pleito) => {
+                          setPleitoSelect(pleito)
+                          setFieldValue("id", pleito)
+                        }}
                       >
-                        <Text>
-                          {selectedItems.length > 0
-                            ? selectedItems.join(", ")
-                            : "Selecionas candidatos"}
-                        </Text>
-                      </Box>
-                    </TouchableOpacity>
-                    <Actionsheet isOpen={isOpen} onClose={onClose}>
-                      <Actionsheet.Content>
-                        <FlatList
-                          data={PleitoId(Number(pleitoSelect))}
-                          renderItem={({ item }) => (
-                            <Button
-                              bg={"dark.300"}
-                              variant={selectedItems.includes(item) ? "solid" : "outline"}
-                              onPress={() => toggleItemSelection(item)}
-                              mb={2}
+                        <Select.Item label="" value=""></Select.Item>
+                        {pleitos &&
+                          pleitos.map((pleito) => (
+                            <Select.Item label={pleito.nomePleito} value={`${pleito.id}`} />
+                          ))
+                        }
+                      </Select>
+                      {pleitoSelect != "" && pleitoSelect != null &&
+                        <Box mt={5} w={"100%"}>
+                          <Box w={"100%"} flexWrap={"wrap"} flexDir={"row"}>
+                            <Select
+                              selectedValue={pleitoStatus}
+                              minWidth="200"
+                              bg={"white"}
+                              accessibilityLabel="Choose Service"
+                              placeholder="STATUS"
+                              _selectedItem={{
+                                bg: "teal.600",
+                                endIcon: <CheckIcon size="5" />,
+                              }}
+                              mt={1}
+                              onValueChange={(pleito) => {
+                                setPleitoStatus(pleito)
+                                setFieldValue("id", pleito)
+                              }}
                             >
-                              {item}
-                            </Button>
-                          )}
-                          keyExtractor={(item) => item}
-                        />
-                        <Button bg={"green.400"} onPress={onClose} mt={4}>
-                          Enviar
-                        </Button>
-                      </Actionsheet.Content>
-                    </Actionsheet>
-                    <Box w={"100%"} flexWrap={"wrap"} flexDir={"row"}>
-                      <Botao w={"100%"} mt={4} bg="green.500" borderRadius={40}>
-                        Confirmar
-                      </Botao>
-                      <Botao w={"100%"} mt={4} bg="red.500" borderRadius={40}>
-                        Cancelar
-                      </Botao>
-                    </Box>
-                  </Box>
-                }
+                              <Select.Item label={""} value={""} ></Select.Item>
+                              <Select.Item label={"ENCERRAR"} value={"ENCERRAR"} ></Select.Item>
+                            </Select>
+                            <Botao w={"100%"} mt={4} bg="red.500" borderRadius={40} onPress={handleSubmit}>
+                              Excluir pleito
+                            </Botao>
+                            <Botao w={"100%"} mt={4} bg="green.500" borderRadius={40} onPress={() => editarPleito(Number(pleitoSelect))}>
+                              Editar Status
+                            </Botao>
+                            <Botao w={"100%"} mt={4} bg="yellow.500" borderRadius={40} onPress={() => cancelarEdicacao()}>
+                              Cancelar
+                            </Botao>
+                          </Box>
+                        </Box>
+                      }
+                    </>
+                  )}
+                </Formik>
               </BoxCampForm>
-
+              {menssagem ? <MenssagemExclusao></MenssagemExclusao> : ""}
             </Box>
 
           </PanGestureHandler>

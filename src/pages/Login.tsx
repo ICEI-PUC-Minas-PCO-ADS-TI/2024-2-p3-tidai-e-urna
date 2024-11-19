@@ -20,7 +20,7 @@ import { AppDispatch, RootState } from "../redux/store";
 import { Props2 } from "../router/TypesRoutes";
 
 
-interface IUsuarioVo {
+export interface IUsuarioVo {
   id: string | null;
   nomeUsuario: string | null;
   curso: string | null;

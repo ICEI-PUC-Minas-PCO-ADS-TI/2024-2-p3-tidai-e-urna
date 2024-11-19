@@ -14,10 +14,6 @@ const itemsMenuAluno = [
     navigation: "EditarPerfil",
   },
   {
-    nome: "Visualizar relatórios",
-    navigation: "BuscarRelatorio"
-  },
-  {
     nome: "Sair do App",
     navigation: "Login"
   }
@@ -48,10 +44,13 @@ const itemsMenuAdmin = [
 
 export default function Perfil() {
   const user = useSelector((state: RootState) => state.user.tipoUsuarioEnum)
+  const usuario = useSelector((state: RootState) => state.user)
+  console.log("USUARIO", usuario)
+
   return (
     <ImagemFundo>
       <ScrollView flex={1}>
-        <AvatarPerfil></AvatarPerfil>
+        <AvatarPerfil nome={usuario.nomeUsuario} curso={usuario.curso}></AvatarPerfil>
         <Dropdown1 nomeBotao="Menu" opcoesInputs={user === "ADMIN" ? itemsMenuAdmin : itemsMenuAluno}></Dropdown1>
       </ScrollView>
     </ImagemFundo>

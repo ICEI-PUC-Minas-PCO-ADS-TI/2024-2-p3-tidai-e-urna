@@ -5,6 +5,7 @@ import { Cadastro } from "../pages/Cadastro";
 import CriarPleito from "../pages/CriarPleito";
 import { Login } from "../pages/Login";
 import Pleito from "../pages/Pleito";
+import TelaVazia from "../pages/TelaVazia";
 
 const Tab = createNativeStackNavigator();
 
@@ -34,6 +35,11 @@ export default function Rotas() {
       <Tab.Screen
         name="CriarPleito"
         component={CriarPleito}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="TelaVazia"
+        component={TelaVazia}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>

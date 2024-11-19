@@ -1,21 +1,26 @@
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import axios, { AxiosResponse } from "axios";
+import { useNavigation } from "expo-router";
 import { Box, Button, Center, Modal, Text } from "native-base";
 import { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
 import { Titulo } from "../Componentes/Titulo/Titulo";
+import { RootState } from "../redux/store";
 import { RootStackParamList } from "../router/TypesRoutes";
 
 type PleitoRouteProp = RouteProp<RootStackParamList, "Pleito">;
 
-interface Candidato {
+export interface Candidato {
   id: number,
   nomeCandidato: string,
   numeroCandidato: number
 }
 
 export default function Pleito() {
+  const usuario = useSelector((state: RootState) => state.user)
+  const navigation = useNavigation();
   const route = useRoute<PleitoRouteProp>();
   const [selectCandidato, setSelectCandidato] = useState<number | null>(null)
   const [candidato, setCandidato] = useState<Candidato>()
@@ -23,6 +28,8 @@ export default function Pleito() {
   const { id } = route.params;
   const isSelected = setSelectCandidato === id;
   const [showModal, setShowModal] = useState(false);
+  const [podeVotar, setPodeVotar] = useState<boolean>(true)
+  const [idCandidato, setIdCandidato] = useState<Number>();
 
 
   const selecionadoCandidato = (candidato: Candidato) => {
@@ -39,7 +46,7 @@ export default function Pleito() {
 
       try {
         const response: AxiosResponse<Candidato[]> = await axios.post(url, { timeout: 5000 });
-        console.log('Requisição feita com sucesso');
+        console.log('Requisição feita com sucesso fetchCandidatoPleito  ');
         if (Array.isArray(response.data)) {
           setCandidatos(response.data)
         } else {
@@ -61,9 +68,44 @@ export default function Pleito() {
     };
 
     fetchCandidatoPleito();
+    const intervalId = setInterval(fetchCandidatoPleito, 8000); // Atualiza a cada 5 segundos
+    return () => clearInterval(intervalId); // Limpa o intervalo ao desmontar o componente
   }, [id]);
 
-  console.log("candidatos", candidatos.length)
+  const cadastrarVoto = async (idUsuario: number, idCandidato: number, idPleito: number) => {
+    const url = `https://e-urna-back.onrender.com/voto/cadastro`;
+
+    const request = {
+      candidatoVo: {
+        id: idCandidato
+      },
+      usuarioVo: {
+        id: idUsuario
+      },
+      pleitoVo: {
+        id: idPleito - 1
+      }
+    }
+
+    try {
+      const response: AxiosResponse = await axios.post(url, request, { timeout: 5000 });
+      console.log('Cadastro VOTO feito com sucesso');
+      navigation.navigate("TelaVazia")
+
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Erro de Axios:', error.message);
+        if (error.response) {
+          console.error('Status:', error.response.status);
+          console.error('Dados:', error.response.data);
+        } else if (error.request) {
+          console.error('Erro de requisição:', error.request);
+        }
+      } else {
+        console.error('Erro não relacionado ao Axios:', error);
+      }
+    }
+  }
 
   return (
     <ImagemFundo>
@@ -96,9 +138,6 @@ export default function Pleito() {
           </Box>
         </TouchableOpacity>
       )}
-
-
-
       <Center>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)} _backdrop={{
           _dark: {
@@ -120,6 +159,7 @@ export default function Pleito() {
                   Cancelar
                 </Button>
                 <Button bg={"green.500"} onPress={() => {
+                  cadastrarVoto(Number(usuario.id), id, Number(selectCandidato))
                   setShowModal(false);
                 }}>
                   Confirmar

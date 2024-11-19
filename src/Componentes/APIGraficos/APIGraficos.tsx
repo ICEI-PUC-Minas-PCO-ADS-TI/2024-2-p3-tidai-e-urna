@@ -1,4 +1,7 @@
-import { Box, ScrollView, Text } from "native-base";
+import { Candidato } from "@/src/pages/Pleito";
+import axios, { AxiosResponse } from "axios";
+import { Box, Text } from "native-base";
+import { useEffect, useState } from "react";
 import { Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { ColorsApi } from "../../utils/Colors";
@@ -13,57 +16,97 @@ const chartConfig = {
   barPercentage: 0.5,
   useShadowColorFromDataset: false // optional
 };
-interface Candidato {
-  id: number;
-  nome: string;
-  curso: string;
-  votos: number;
-}
+
 interface ApiGraficoProps {
-  candidatos: Candidato[];
-  periodoCurso: string
+  periodoCurso: string,
+  id: number
 
 
 }
-export default function ApiGrafico({ candidatos, periodoCurso }: ApiGraficoProps) {
+export default function ApiGrafico({ periodoCurso, id }: ApiGraficoProps) {
+  const [candidatos, setCandidatos] = useState<Candidato[]>([]);
+  const screenWidth = Dimensions.get("window").width;
 
-  const data = [
-
+  const dataValues = [
 
   ];
 
 
+  useEffect(() => {
+    const fetchCandidatos = async () => {
+      const url = `https://e-urna-back.onrender.com/pleito/buscarCadidato/${id}`;
+
+      try {
+        const response: AxiosResponse<Candidato[]> = await axios.post(url, { timeout: 5000 });
+        console.log('Requisição feita com sucesso');
+        setCandidatos(response.data)
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.error('Erro de Axios:', error.message);
+          if (error.response) {
+            console.error('Status:', error.response.status);
+            console.error('Dados:', error.response.data);
+          } else if (error.request) {
+            console.error('Erro de requisição:', error.request);
+          }
+        } else {
+          console.error('Erro não relacionado ao Axios:', error);
+        }
+      }
+    };
+    fetchCandidatos();
+    fetchVotosCandidatos(1)
+  }, [id]);
+
+  const fetchVotosCandidatos = async (id: number) => {
+    const url = `https://e-urna-back.onrender.com/voto/votosCandidato/${1}`;
+
+    try {
+      const response: AxiosResponse<Number> = await axios.post(url, { timeout: 5000 });
+      console.log('Requisição feita com sucesso Votos', response.data);
+      return response.data
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Erro de Axios:', error.message);
+        if (error.response) {
+          console.error('Status:', error.response.status);
+          console.error('Dados:', error.response.data);
+        } else if (error.request) {
+          console.error('Erro de requisição:', error.request);
+        }
+      } else {
+        console.error('Erro não relacionado ao Axios:', error);
+      }
+    }
+  }
   for (let i = 0; i < candidatos.length; i++) {
     let pleitoData = {
-      name: candidatos[i].nome,
-      population: candidatos[i].votos,
+      name: candidatos[i].nomeCandidato,
+      // population: candidatos[i].votos,
+      population: i,
       color: ColorsApi[i],
       legendFontColor: "#000000",
       legendFontSize: 15
     }
-    data.push(pleitoData)
-
-
+    dataValues.push(pleitoData)
   }
-  const screenWidth = Dimensions.get("window").width;
 
   return (
-    <ScrollView>
-      <Box borderRadius={25} alignItems={"center"} mt={10} marginRight={9} w={"100%"} bg={"rgba(0,0,0,0.3)"}>
-        <Text color={"white"} fontSize={25}>{periodoCurso}</Text>
-        <PieChart
-          data={data}
-          width={screenWidth}
-          height={220}
-          chartConfig={chartConfig}
-          accessor={"population"}
-          backgroundColor={"transparent"}
-          paddingLeft={"-10"}
-          center={[10, 20]}
-          absolute
-        />
-      </Box>
-    </ScrollView>
+
+    <Box borderRadius={25} alignItems={"center"} mt={10} marginRight={9} w={"100%"} bg={"rgba(0,0,0,0.3)"}>
+      <Text color={"white"} w={"100%"} textAlign={"center"} fontSize={25}>{periodoCurso}</Text>
+      {dataValues.length > 0 ? <PieChart
+        data={dataValues}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor={"population"}
+        backgroundColor={"transparent"}
+        paddingLeft={"-10"}
+        center={[10, 20]}
+        absolute
+      /> : <Text>Pleito sem candidato</Text>}
+    </Box>
 
   );
 }
