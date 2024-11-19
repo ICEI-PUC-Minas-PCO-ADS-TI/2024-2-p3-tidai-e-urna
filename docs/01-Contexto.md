@@ -41,8 +41,14 @@ O público alvo de nossa aplicação são os alunos e o corpo docente da PUC Min
 
 **Específico:**
 
-Alunos de graduação do primeiro ao penúltimo período de curso da PUC Minas interessados em escolher e/ou se candidatar a representante de turma ou curso
+Alunos de Graduação
 
-Coordenadores e membros do diretório acadêmico dos cursos de graduação da PUC Minas com interesse em definir de forma simples e segura os representantes discentes de seus respectivos cursos 
+1 - Público: Estudantes do primeiro ao penúltimo período de curso.
+Objetivo: Participar ativamente como eleitores ou candidatos nas eleições para representantes de turma e curso, promovendo engajamento acadêmico.
+
+Coordenadores e Diretório Acadêmico
+
+2 - Público: Coordenadores e membros do diretório acadêmico dos cursos de graduação.
+Objetivo: Facilitar a gestão e a condução de eleições, garantindo processos simplificados e resultados confiáveis, promovendo uma comunicação eficiente com o corpo discente.
 
 
