@@ -35,7 +35,7 @@ export default function Pleito() {
   const selecionadoCandidato = (candidato: Candidato) => {
     setShowModal(true)
     setCandidato(candidato)
-    setSelectCandidato(candidato.id === selectCandidato ? null : candidato.id)
+    setSelectCandidato(candidato.numeroCandidato === selectCandidato ? null : candidato.numeroCandidato)
   }
 
 
@@ -46,7 +46,7 @@ export default function Pleito() {
 
       try {
         const response: AxiosResponse<Candidato[]> = await axios.post(url, { timeout: 5000 });
-        console.log('Requisição feita com sucesso fetchCandidatoPleito  ');
+        console.log('Requisição feita com sucesso, Tela PLEITO  ');
         if (Array.isArray(response.data)) {
           setCandidatos(response.data)
         } else {
@@ -72,19 +72,14 @@ export default function Pleito() {
     return () => clearInterval(intervalId); // Limpa o intervalo ao desmontar o componente
   }, [id]);
 
-  const cadastrarVoto = async (idUsuario: number, idCandidato: number, idPleito: number) => {
+  const cadastrarVoto = async (idUsuario: number, idPleito: number, idCandidato: number,) => {
     const url = `https://e-urna-back.onrender.com/voto/cadastro`;
 
     const request = {
-      candidatoVo: {
-        id: idCandidato
-      },
-      usuarioVo: {
-        id: idUsuario
-      },
-      pleitoVo: {
-        id: idPleito - 1
-      }
+      usuarioId: idUsuario,
+      pleitoId: idPleito,
+      candidatoId: idCandidato
+
     }
 
     try {

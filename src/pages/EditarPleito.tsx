@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import { useNavigation } from "expo-router";
 import { Formik } from "formik";
 import { Box, CheckIcon, FormControl, ScrollView, Select } from "native-base";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GestureHandlerRootView, PanGestureHandler } from "react-native-gesture-handler";
 import { Botao } from "../Componentes/Botao/Botao";
 import BoxCampForm from "../Componentes/BoxCampForm/BoxCampForm";
@@ -24,19 +24,19 @@ export default function EditarPleito() {
   const [pleitoSelect, setPleitoSelect] = useState("")
   const [pleitoStatus, setPleitoStatus] = useState("")
 
-  useEffect(() => {
-    const fetchPleito = async () => {
-      const url = "https://e-urna-back.onrender.com/pleito/pleitoAll";
-      try {
-        const response: AxiosResponse<IPleito[]> = await axios.get(url);
-        console.log('Requisição feita com sucesso PleitoAll:');
-        setPleitos(response.data)
-      } catch (error) {
-        console.error('Erro em fetchPleito:', error);
-      }
-    };
-    fetchPleito();
-  }, [])
+
+
+
+  const fetchPleito = async () => {
+    const url = "https://e-urna-back.onrender.com/pleito/pleitoAll";
+    try {
+      const response: AxiosResponse<IPleito[]> = await axios.get(url);
+      console.log('Requisição feita com sucesso PleitoAll:');
+      setPleitos(response.data)
+    } catch (error) {
+      console.error('Erro em fetchPleito:', error);
+    }
+  };
 
   const excluirPleito = async (id: number) => {
     const url = `https://e-urna-back.onrender.com/pleito/removerPleito/${id}`;
@@ -45,7 +45,6 @@ export default function EditarPleito() {
       const response: AxiosResponse = await axios.put(url, null, { timeout: 5000 }); // Tempo limite de 5 segundos
       console.log('Exclusão bem-sucedido:', response.data);
       setMenssagem(true)
-
       setTimeout(() => {
         setMenssagem(false)
         navigation.navigate("Perfil")
@@ -114,8 +113,8 @@ export default function EditarPleito() {
                     id: ""
                   }}
                   onSubmit={(values) => {
-                    console.log("VALUES", values.id)
-                    excluirPleito(Number(values.id))
+                    console.log("VALUES", pleitoSelect)
+                    excluirPleito(Number(pleitoSelect))
                   }}
                 >
                   {({ handleSubmit, setFieldValue, values, errors, touched }) => (
@@ -125,6 +124,7 @@ export default function EditarPleito() {
                         minWidth="100"
                         bg={"white"}
                         accessibilityLabel="Choose Service"
+                        onOpen={fetchPleito}
                         placeholder="Pleitos"
                         _selectedItem={{
                           bg: "teal.600",

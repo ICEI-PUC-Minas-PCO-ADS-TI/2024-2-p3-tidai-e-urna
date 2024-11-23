@@ -39,7 +39,7 @@ export default function Principal() {
 
       try {
         const response: AxiosResponse<IPleito[]> = await axios.get(url);
-        console.log('Requisição feita com sucesso');
+        console.log('Requisição feita com sucesso, tela PRINCIPAL');
         if (Array.isArray(response.data)) {
           setPleitos(response.data);
         } else {
@@ -62,39 +62,39 @@ export default function Principal() {
 
     fetchPleitos();
 
-    const intervalId = setInterval(fetchPleitos, 80000); // Atualiza a cada 5 segundos
+    const intervalId = setInterval(fetchPleitos, 60000); // Atualiza a cada 1 minuto (60.000 ms)
     return () => clearInterval(intervalId); // Limpa o intervalo ao desmontar o componente
   }, []);
 
 
-  const fetchVencedorPleito = async (id: number) => {
-    const url = `https://e-urna-back.onrender.com/pleito/ganhadorPleito/${id}`
+  // const fetchVencedorPleito = async (id: number) => {
+  //   const url = `https://e-urna-back.onrender.com/pleito/ganhadorPleito/${id}`
 
-    try {
-      const response: AxiosResponse<IVencedor> = await axios.get(url);
-      console.log('Requisição feita com sucesso', response.data);
-      if (response.data.candidatoNome != null) {
-        console.log("Ok")
-        setVencedor((prevVencedores) => [...prevVencedores, response.data]);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error('Erro de Axios:', error.message);
-        if (error.response) {
-          console.error('Status:', error.response.status);
-          console.error('Dados:', error.response.data);
-        } else if (error.request) {
-          console.error('Erro de requisição:', error.request);
-        }
-      } else {
-        console.error('Erro não relacionado ao Axios:', error);
-      }
-    }
-  };
+  //   try {
+  //     const response: AxiosResponse<IVencedor> = await axios.get(url);
+  //     console.log('Requisição feita com sucesso', response.data);
+  //     if (response.data.candidatoNome != null) {
+  //       console.log("Ok")
+  //       setVencedor((prevVencedores) => [...prevVencedores, response.data]);
+  //     }
+  //   } catch (error) {
+  //     if (axios.isAxiosError(error)) {
+  //       console.error('Erro de Axios:', error.message);
+  //       if (error.response) {
+  //         console.error('Status:', error.response.status);
+  //         console.error('Dados:', error.response.data);
+  //       } else if (error.request) {
+  //         console.error('Erro de requisição:', error.request);
+  //       }
+  //     } else {
+  //       console.error('Erro não relacionado ao Axios:', error);
+  //     }
+  //   }
+  // };
 
-  for (let i = 0; i < pleitos.length; i++) {
-    fetchVencedorPleito(Number(pleitos[i].id))
-  }
+  // for (let i = 0; i < pleitos.length; i++) {
+  //   fetchVencedorPleito(Number(pleitos[i].id))
+  // }
   const converterData = (data: any) => {
     const dataVencimento = new Date(data);
     const dataFormatada = dataVencimento.toLocaleDateString('pt-BR');
@@ -113,7 +113,6 @@ export default function Principal() {
               dataVencimento={converterData(pleito.data_termino)}
               nomeCurso={pleito.nomePleito}
               periodoCurso={pleito.nomePleito}
-              quantidade={2}
               status={pleito.status}
               vencedor={vencedor && vencedor.length > index && vencedor[index] && vencedor[index].candidatoNome != null ? vencedor[index].candidatoNome : "Não tem candidato"}
               // vencedor="Ok"

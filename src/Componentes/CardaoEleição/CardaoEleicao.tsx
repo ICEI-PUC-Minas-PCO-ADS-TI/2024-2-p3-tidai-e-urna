@@ -7,7 +7,6 @@ interface CardaoEleicaoProps {
   nomeCurso?: string;
   periodoCurso?: string;
   id: number;
-  quantidade: number;
   dataVencimento: string;
   status: string;
   disabled: boolean;
@@ -53,11 +52,10 @@ export function Example({
   nomeCurso,
   periodoCurso,
   id,
-  quantidade,
   dataVencimento,
   status,
   disabled,
-  vencedor
+
 }: CardaoEleicaoProps) {
   const navigation = useNavigation();
 
@@ -70,7 +68,6 @@ export function Example({
         <Box w={"70%"} >
           <Text fontSize={20} color={"white"}>{nomeCurso}</Text>
           <Text>{periodoCurso}</Text>
-          {!disabled ? <Text>{"Numero de candidatos candidatos " + " " + quantidade}</Text> : <Text>{"Vencedor: " + vencedor}</Text>}
           <Text>{"Data vencimento:" + " " + dataVencimento}</Text>
           <Text>{"Situação" + " " + status}</Text>
         </Box>

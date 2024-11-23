@@ -20,16 +20,26 @@ const chartConfig = {
 interface ApiGraficoProps {
   periodoCurso: string,
   id: number
+}
 
-
+interface IVotosVO {
+  numero_candidato: number,
+  total_votos: number
 }
 export default function ApiGrafico({ periodoCurso, id }: ApiGraficoProps) {
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
+  const [votosCadidatos, setVotosCandidatos] = useState<IVotosVO[]>([])
   const screenWidth = Dimensions.get("window").width;
 
   const dataValues = [
-
   ];
+
+  function getTotalVotos(porNumeroCandidato: IVotosVO[], numeroCandidato: number): number | null {
+    const resultado = porNumeroCandidato.find(
+      (item) => item.numero_candidato === numeroCandidato
+    );
+    return resultado ? resultado.total_votos : null;
+  }
 
 
   useEffect(() => {
@@ -39,6 +49,7 @@ export default function ApiGrafico({ periodoCurso, id }: ApiGraficoProps) {
       try {
         const response: AxiosResponse<Candidato[]> = await axios.post(url, { timeout: 5000 });
         console.log('Requisição feita com sucesso');
+        fetchAllVotosCandidatos(id)
         setCandidatos(response.data)
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -54,36 +65,40 @@ export default function ApiGrafico({ periodoCurso, id }: ApiGraficoProps) {
         }
       }
     };
-    fetchCandidatos();
-    fetchVotosCandidatos(1)
-  }, [id]);
 
-  const fetchVotosCandidatos = async (id: number) => {
-    const url = `https://e-urna-back.onrender.com/voto/votosCandidato/${1}`;
+    const fetchAllVotosCandidatos = async (id: number) => {
+      const url = `https://e-urna-back.onrender.com/voto/allVotosCandidate/${id}`;
 
-    try {
-      const response: AxiosResponse<Number> = await axios.post(url, { timeout: 5000 });
-      console.log('Requisição feita com sucesso Votos', response.data);
-      return response.data
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error('Erro de Axios:', error.message);
-        if (error.response) {
-          console.error('Status:', error.response.status);
-          console.error('Dados:', error.response.data);
-        } else if (error.request) {
-          console.error('Erro de requisição:', error.request);
+      try {
+        const response: AxiosResponse<IVotosVO[]> = await axios.post(url, { timeout: 5000 });
+        console.log('Requisição feita com sucesso Votos');
+        return setVotosCandidatos(response.data)
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.error('Erro de Axios:', error.message);
+          if (error.response) {
+            console.error('Status:', error.response.status);
+            console.error('Dados:', error.response.data);
+          } else if (error.request) {
+            console.error('Erro de requisição:', error.request);
+          }
+        } else {
+          console.error('Erro não relacionado ao Axios:', error);
         }
-      } else {
-        console.error('Erro não relacionado ao Axios:', error);
       }
     }
-  }
+
+    fetchCandidatos();
+    const intervalId = setInterval(fetchCandidatos, 60000); // Atualiza a cada 1 minuto (60.000 ms)
+    return () => clearInterval(intervalId); // Limpa o intervalo ao desmontar o componente
+  }, [id]);
+
+
   for (let i = 0; i < candidatos.length; i++) {
+    let votos = getTotalVotos(votosCadidatos, candidatos[i].numeroCandidato)
     let pleitoData = {
       name: candidatos[i].nomeCandidato,
-      // population: candidatos[i].votos,
-      population: i,
+      population: votos != null ? votos : 0,
       color: ColorsApi[i],
       legendFontColor: "#000000",
       legendFontSize: 15

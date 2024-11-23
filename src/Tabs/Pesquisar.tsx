@@ -23,9 +23,9 @@ export default function Pesquisar() {
         console.error('Erro em fetchUsuarios:', error);
       }
     };
+    ;
+    fetchPleito()
 
-    console.log('useEffect fetchPleito iniciado');
-    fetchPleito();
   }, []);
 
 

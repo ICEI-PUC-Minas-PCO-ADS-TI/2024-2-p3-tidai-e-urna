@@ -50,7 +50,7 @@ export default function Perfil() {
   return (
     <ImagemFundo>
       <ScrollView flex={1}>
-        <AvatarPerfil nome={usuario.nomeUsuario} curso={usuario.curso}></AvatarPerfil>
+        <AvatarPerfil nome={usuario.nomeUsuario} curso={usuario.curso ? usuario.curso : "ADMINISTRADOR"}></AvatarPerfil>
         <Dropdown1 nomeBotao="Menu" opcoesInputs={user === "ADMIN" ? itemsMenuAdmin : itemsMenuAluno}></Dropdown1>
       </ScrollView>
     </ImagemFundo>

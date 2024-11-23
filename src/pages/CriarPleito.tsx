@@ -121,10 +121,10 @@ export default function CriarPleito() {
               periodo: "",
               data_termino: "",
             }}
-            onSubmit={(values) => {
+            onSubmit={(values, { resetForm }) => {
               values.data_termino = dateTermino?.toString()
               cadastrarPleito(values.nomePleito, values.periodo, values.data_termino);
-
+              resetForm()
             }}
           >
             {({ handleSubmit, setFieldValue, values, errors, touched }) => (
@@ -136,6 +136,7 @@ export default function CriarPleito() {
                     setFieldValue("nomePleito", value)
                   }}
                   placeholder="Digite o nome do curso"
+                  value={values.nomePleito}
                 ></EntradaDeTexto>
                 <Box maxW="120" mt={3}>
                   <FormControl.Label _text={{ color: "black" }}>
@@ -167,7 +168,7 @@ export default function CriarPleito() {
                     label="Data termino"
                     placeholder="Escolha a data"
                     value={
-                      dateTermino ? dateTermino.toLocaleDateString("pt-BR") : " "
+                      values.data_termino = (dateTermino ? dateTermino.toLocaleDateString("pt-BR") : " ")
                     }
                     onBlur={(valor) => setFieldValue("data_termino", valor)}
                   ></EntradaDeTexto>

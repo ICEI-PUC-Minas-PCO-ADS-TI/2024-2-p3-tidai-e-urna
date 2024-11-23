@@ -148,13 +148,15 @@ export default function CadastroCandidato() {
               numeroCandidato: "",
             }}
             validationSchema={yupCadastroCandidato}
-            onSubmit={(values) => {
+            onSubmit={(values, { resetForm }) => {
               const nomeCandidato: string = values.nomeCandidato
               cadastrarCandidato(
                 nomeCandidato,
                 values.cursoPleito,
                 values.numeroCandidato,
               );
+
+              resetForm()
 
 
             }}
@@ -170,6 +172,7 @@ export default function CadastroCandidato() {
                     bg={"white"}
                     accessibilityLabel="Choose Service"
                     placeholder="Selecione um candidato "
+                    selectedValue={values.nomeCandidato}
                     _selectedItem={{
                       bg: "teal.600",
                       endIcon: <CheckIcon size="5" />,
@@ -209,6 +212,7 @@ export default function CadastroCandidato() {
                     <EntradaDeTexto
                       label="Nº do Candidato"
                       placeholder="Numero do candidato"
+                      value={values.numeroCandidato}
                       onChangeText={(text) => {
                         setFieldValue("numeroCandidato", Number(text))
                       }}
