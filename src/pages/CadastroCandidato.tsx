@@ -14,6 +14,7 @@ import { StyleSheet } from "react-native";
 import { Botao } from "../Componentes/Botao/Botao";
 import BoxCampForm from "../Componentes/BoxCampForm/BoxCampForm";
 import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
+import IconLoading from "../Componentes/IconLoading/IconLoading";
 import { Titulo } from "../Componentes/Titulo/Titulo";
 import { IPleito } from "../Tabs/Principal";
 import { yupCadastroCandidato } from "../utils/Yups";
@@ -47,6 +48,7 @@ export default function CadastroCandidato() {
   const [pleitos, setPleitos] = useState<IPleito[]>();
   const navigation = useNavigation();
   const [refresh, setRefresh] = useState(false);
+  const [showLoading, setShowLoading] = useState<boolean>(false)
 
 
 
@@ -68,6 +70,12 @@ export default function CadastroCandidato() {
   }, [refresh]);
   const forceRefresh = () => setRefresh(!refresh);
 
+  const setSucessCadastroCandidato = () => {
+    setTimeout(() => {
+      setShowLoading(false)
+      navigation.navigate("TelaVazia")
+    }, 8000);
+  }
   const fetchPleito = async () => {
     const url = "https://e-urna-back.onrender.com/pleito/pleitoAll";
     try {
@@ -96,7 +104,8 @@ export default function CadastroCandidato() {
     try {
       const response: AxiosResponse<ICadastroPleito> = await axios.post(url, resquestBody, { timeout: 5000 }); // Tempo limite de 5 segundos
       console.log('Cadastro bem-sucedido:', response.data);
-      navigation.navigate("TelaVazia")
+      setShowLoading(true)
+      setSucessCadastroCandidato()
       forceRefresh()
       return true;
     } catch (error) {
@@ -220,6 +229,8 @@ export default function CadastroCandidato() {
                     />
                   </Box>
                   <Box alignItems={"center"} mt={5} w={"100%"}>
+                    <Box mt={5} mb={5} w={"100%"}>{showLoading && <IconLoading menssagem="Cadastrando candidato..."></IconLoading>}</Box>
+
                     <Botao
                       onPress={handleSubmit}
                       w={"70%"}

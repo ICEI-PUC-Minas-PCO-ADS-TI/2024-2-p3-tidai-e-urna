@@ -17,6 +17,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Botao } from "../Componentes/Botao/Botao";
 import BoxCampForm from "../Componentes/BoxCampForm/BoxCampForm";
 import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
+import IconLoading from "../Componentes/IconLoading/IconLoading";
 import { Titulo } from "../Componentes/Titulo/Titulo";
 import { periodosCursos } from "../utils/Periodos";
 
@@ -31,6 +32,7 @@ interface ICadastroPleitoVo {
 export default function CriarPleito() {
   const navigation = useNavigation();
   const [service, setService] = useState(""); //Estado do componente Periodo
+  const [showLoading, setShowLoading] = useState<boolean>(false)
 
   // Cuida dos campos de data com o modal
   const [isVisible, setIsVisible] = useState(false);
@@ -68,6 +70,13 @@ export default function CriarPleito() {
 
   }
 
+  const setSucessCreate = () => {
+    setTimeout(() => {
+      setShowLoading(false)
+      navigation.navigate("TelaVazia")
+    }, 8000);
+  }
+
   const cadastrarPleito = async (nomePleito: string, periodo: string, data_termino: string) => {
     const url = "https://e-urna-back.onrender.com/pleito/cadastro";
 
@@ -86,7 +95,8 @@ export default function CriarPleito() {
     try {
       const response: AxiosResponse<ICadastroPleitoVo> = await axios.post(url, resquestBody, { timeout: 5000 }); // Tempo limite de 5 segundos
       console.log('Cadastro bem-sucedido:', response.data);
-      navigation.navigate("TelaVazia")
+      setShowLoading(true)
+      setSucessCreate()
       return true;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -124,7 +134,9 @@ export default function CriarPleito() {
             onSubmit={(values, { resetForm }) => {
               values.data_termino = dateTermino?.toString()
               cadastrarPleito(values.nomePleito, values.periodo, values.data_termino);
-              resetForm()
+              setTimeout(() => {
+                resetForm()
+              }, 4000);
             }}
           >
             {({ handleSubmit, setFieldValue, values, errors, touched }) => (
@@ -193,6 +205,7 @@ export default function CriarPleito() {
                   </Actionsheet.Content>
                 </Actionsheet>
                 <Box w={"100%"} flexWrap={"wrap"} flexDir={"row"}>
+                  <Box mt={5} w={"100%"}>{showLoading && <IconLoading menssagem="Criando pleito..."></IconLoading>}</Box>
                   <Botao w={"100%"} mt={4} bg="green.500" borderRadius={40} onPress={handleSubmit}>
                     Confirmar
                   </Botao>

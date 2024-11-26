@@ -136,7 +136,7 @@ export function Login({ navigation }: Props2) {
                     onBlur={handleBlur("senhaUsuario")}
                     errorMessage={touched.senhaUsuario && errors.senhaUsuario}
                   />
-                  <Box mt={5} w={"100%"}>{showLoading && <IconLoading menssgaem="Verificando credenciais"></IconLoading>}</Box>
+                  <Box mt={5} w={"100%"}>{showLoading && <IconLoading menssagem="Verificando credenciais"></IconLoading>}</Box>
                   <Link
                     href="https://www.twitch.tv/"
                     _text={{ color: "white", textDecoration: "none" }}

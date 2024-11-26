@@ -7,6 +7,7 @@ import { useState } from "react";
 import { GestureHandlerRootView, PanGestureHandler } from "react-native-gesture-handler";
 import { Botao } from "../Componentes/Botao/Botao";
 import BoxCampForm from "../Componentes/BoxCampForm/BoxCampForm";
+import IconLoading from "../Componentes/IconLoading/IconLoading";
 import MenssagemExclusao from "../Componentes/MenssagemExclusao/MenssagemExclusao";
 import { Titulo } from "../Componentes/Titulo/Titulo";
 import { IPleito } from "../Tabs/Principal";
@@ -14,7 +15,6 @@ import { IPleito } from "../Tabs/Principal";
 
 export default function EditarPleito() {
   const navigation = useNavigation();
-
   const onGestureEvent = (event) => {
     console.log('Gesture event:', event.nativeEvent);
   };
@@ -23,6 +23,8 @@ export default function EditarPleito() {
 
   const [pleitoSelect, setPleitoSelect] = useState("")
   const [pleitoStatus, setPleitoStatus] = useState("")
+  const [showLoading, setShowLoading] = useState<boolean>(false)
+  const [menssagemLoading, setMenssagemLoading] = useState<string>("")
 
 
 
@@ -38,17 +40,33 @@ export default function EditarPleito() {
     }
   };
 
+  const setSucessExclusao = () => {
+    setMenssagem(true)
+    setTimeout(() => {
+      setShowLoading(false)
+      setMenssagem(false)
+      navigation.navigate("Perfil")
+      setPleitoSelect("")
+    }, 4000);
+  }
+
+  const setSucessEdicao = () => {
+    setTimeout(() => {
+      setShowLoading(false)
+      navigation.navigate("TelaVazia")
+    }, 8000);
+  }
+
   const excluirPleito = async (id: number) => {
     const url = `https://e-urna-back.onrender.com/pleito/removerPleito/${id}`;
-    console.log(id)
+    setMenssagemLoading("Excluindo pleito....")
+
     try {
       const response: AxiosResponse = await axios.put(url, null, { timeout: 5000 }); // Tempo limite de 5 segundos
       console.log('Exclusão bem-sucedido:', response.data);
-      setMenssagem(true)
+      setShowLoading(true)
       setTimeout(() => {
-        setMenssagem(false)
-        navigation.navigate("Perfil")
-        setPleitoSelect("")
+        setSucessExclusao()
       }, 5000);
       return true;
     } catch (error) {
@@ -65,19 +83,17 @@ export default function EditarPleito() {
       }
     }
 
-    setMenssagem(true)
-    // setTimeout(() => {
-    //   navigation.navigate("Perfil")
-    //   setMenssagem(false)
-    // }, 3000);
+    // setMenssagem(true)
   }
 
   const editarPleito = async (id: number) => {
     const url = `https://e-urna-back.onrender.com/pleito/atualizarPleito/${id}`;
+    setMenssagemLoading("Processando edição....")
     try {
       const response: AxiosResponse = await axios.put(url, null, { timeout: 5000 }); // Tempo limite de 5 segundos
       console.log('Modificação bem-sucedido:', response.data);
-      navigation.navigate("TelaVazia")
+      setShowLoading(true)
+      setSucessEdicao()
       return true;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -165,14 +181,12 @@ export default function EditarPleito() {
                               <Select.Item label={""} value={""} ></Select.Item>
                               <Select.Item label={"ENCERRAR"} value={"ENCERRAR"} ></Select.Item>
                             </Select>
+                            <Box mt={5} w={"100%"}>{showLoading && <IconLoading menssagem={menssagemLoading}></IconLoading>}</Box>
                             <Botao w={"100%"} mt={4} bg="red.500" borderRadius={40} onPress={handleSubmit}>
                               Excluir pleito
                             </Botao>
                             <Botao w={"100%"} mt={4} bg="green.500" borderRadius={40} onPress={() => editarPleito(Number(pleitoSelect))}>
                               Editar Status
-                            </Botao>
-                            <Botao w={"100%"} mt={4} bg="yellow.500" borderRadius={40} onPress={() => cancelarEdicacao()}>
-                              Cancelar
                             </Botao>
                           </Box>
                         </Box>
@@ -180,6 +194,9 @@ export default function EditarPleito() {
                     </>
                   )}
                 </Formik>
+                <Botao w={"100%"} mt={4} bg="yellow.500" borderRadius={40} onPress={() => cancelarEdicacao()}>
+                  Cancelar
+                </Botao>
               </BoxCampForm>
               {menssagem ? <MenssagemExclusao></MenssagemExclusao> : ""}
             </Box>

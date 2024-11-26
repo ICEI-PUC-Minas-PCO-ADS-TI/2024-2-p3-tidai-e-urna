@@ -148,7 +148,7 @@ export function Cadastro({ navigation }: Props) {
                       />
                     );
                   })}
-                  <Box mt={5} w={"100%"}>{showLoading && <IconLoading menssgaem="Verificado numero Pessoa/Matricula"></IconLoading>}</Box>
+                  <Box mt={5} w={"100%"}>{showLoading && <IconLoading menssgaem="Verificando numero Pessoa/Matricula"></IconLoading>}</Box>
                   <Box marginTop={3} alignItems={"center"} width={"100%"} padding={2}>
                     <Stack space={4} width={"75%"}>
                       <Botao

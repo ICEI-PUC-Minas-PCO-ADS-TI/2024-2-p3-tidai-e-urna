@@ -6,8 +6,10 @@ import { Box, VStack } from "native-base";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
 import { Botao } from "../Componentes/Botao/Botao";
 import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
+import IconLoading from "../Componentes/IconLoading/IconLoading";
 import MenssagemSucesso from "../Componentes/MensagemSucesso/MenssagemSucesso";
 import MenssagemExclusao from "../Componentes/MenssagemExclusao/MenssagemExclusao";
 import { Titulo } from "../Componentes/Titulo/Titulo";
@@ -15,11 +17,18 @@ import { login } from "../redux/slices/userSlice";
 import { AppDispatch, RootState } from "../redux/store";
 
 
+
 interface IUpdateUsuario {
   curso: string,
   senhaUsuario: string,
   email: string
 }
+const schemaEditarPerfil = Yup.object().shape({
+  email: Yup.string().email("Ensira um email valido").required("Campo obrigatório"),
+  password: Yup.string().required("Campo obrigatório")
+
+
+})
 export default function EditarPerfil() {
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation();
@@ -27,8 +36,11 @@ export default function EditarPerfil() {
   const [contaAtiva, setContaAtiva] = useState<boolean>(true)
   const [contaModificada, setContaModificada] = useState<boolean>(false)
   const [mostrarForm, setMostrarForm] = useState<boolean>(true);
+  const [showLoading, setShowLoading] = useState<boolean>(false)
 
-
+  const cancelarEdicao = () => {
+    navigation.navigate("Perfil")
+  }
   const excluirUsuario = async (id: number) => {
     const url = `https://e-urna-back.onrender.com/usuario/removerUsuario/${id}`;
     console.log(id)
@@ -36,10 +48,8 @@ export default function EditarPerfil() {
     try {
       const response: AxiosResponse = await axios.put(url, null, { timeout: 5000 }); // Tempo limite de 5 segundos
       console.log('Exclusão bem-sucedido:', response.data);
-      setContaAtiva(false)
-      setTimeout(() => {
-        navigation.navigate("Login")
-      }, 4000);
+      setShowLoading(true)
+      setSucessoExclusao()
       return true;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -56,6 +66,25 @@ export default function EditarPerfil() {
     }
   }
 
+  const setsSucessModicado = () => {
+    setTimeout(() => {
+      setMostrarForm(false)
+      setContaModificada(true)
+      setMostrarForm(true)
+      setShowLoading(false)
+      navigation.navigate("Perfil")
+    }, 10000);
+  }
+
+  const setSucessoExclusao = () => {
+    setTimeout(() => {
+      setShowLoading(false)
+      setContaAtiva(false)
+      setTimeout(() => {
+        navigation.navigate("Login")
+      }, 4000);
+    }, 8000);
+  }
   const modificarUsuario = async (email: string, senha: string, curso: string, id: number) => {
     const url = `https://e-urna-back.onrender.com/usuario/updateUsuario/${id}`;
     const usuarioVo: IUpdateUsuario = {
@@ -67,8 +96,10 @@ export default function EditarPerfil() {
     try {
       const response: AxiosResponse = await axios.put(url, usuarioVo, { timeout: 5000 }); // Envia o objeto no corpo da requisição
       console.log('Atualização bem-sucedida:', response.data);
-      setContaModificada(true)
-      setMostrarForm(false)
+      setShowLoading(true)
+      setTimeout(() => {
+        setsSucessModicado()
+      }, 8000);
       const data = {
         id: response.data.id,
         nomeUsuario: response.data.nome,
@@ -77,11 +108,6 @@ export default function EditarPerfil() {
       }
 
       dispatch(login(data))
-      setTimeout(() => {
-        navigation.navigate("Perfil")
-        setContaModificada(false)
-        setMostrarForm(true)
-      }, 2000);
       return true;
     } catch (error) {
       console.error('Erro na atualização:', error);
@@ -97,6 +123,7 @@ export default function EditarPerfil() {
         {contaAtiva && mostrarForm && <Box padding={5} style={styles.box}>
           <Formik
             initialValues={{ email: '', password: '', course: '' }}
+            validationSchema={schemaEditarPerfil}
             onSubmit={(values) => {
               modificarUsuario(values.email, values.password, values.course, Number(usuario.id))
             }}
@@ -108,6 +135,7 @@ export default function EditarPerfil() {
                   placeholder="Digite um novo E-mail"
                   value={values.email}
                   onChangeText={(text) => setFieldValue('email', text)}
+                  errorMessage={errors.email}
                 />
                 <EntradaDeTexto
                   label="Nova senha"
@@ -115,6 +143,8 @@ export default function EditarPerfil() {
                   segureTextEntry={true}
                   value={values.password}
                   onChangeText={(text) => setFieldValue('password', text)}
+                  errorMessage={errors.password}
+
                 />
                 <EntradaDeTexto
                   label="Modificar Curso"
@@ -123,6 +153,8 @@ export default function EditarPerfil() {
                   onChangeText={(text) => setFieldValue('course', text)}
                 />
                 <Box alignItems="center" w="100%">
+                  <Box mt={5} w={"100%"}>{showLoading && <IconLoading menssagem="Processsando"></IconLoading>}</Box>
+
                   <Botao
                     w="80%"
                     marginTop={10}
@@ -133,29 +165,32 @@ export default function EditarPerfil() {
                   >
                     Modificar
                   </Botao>
-                  <Botao
-                    w={"85%"}
-                    marginTop={5}
-                    borderRadius={40}
-                    _text={{ fontSize: 20 }}
-                    bg={"teal.500"}
-                  >
-                    Cancelar
-                  </Botao>
-                  <Botao
-                    w={"85%"}
-                    marginTop={5}
-                    borderRadius={40}
-                    _text={{ fontSize: 20 }}
-                    bg={"red.500"}
-                    onPress={() => excluirUsuario(Number(usuario.id))}
-                  >
-                    Excluir Conta
-                  </Botao>
                 </Box>
               </>
             )}
           </Formik>
+          <Box alignItems={"center"}>
+            <Botao
+              w={"85%"}
+              marginTop={5}
+              borderRadius={40}
+              _text={{ fontSize: 20 }}
+              bg={"teal.500"}
+              onPress={() => cancelarEdicao()}
+            >
+              Cancelar
+            </Botao>
+            <Botao
+              w={"85%"}
+              marginTop={5}
+              borderRadius={40}
+              _text={{ fontSize: 20 }}
+              bg={"red.500"}
+              onPress={() => excluirUsuario(Number(usuario.id))}
+            >
+              Excluir Conta
+            </Botao>
+          </Box>
         </Box>}
         {contaModificada ? <MenssagemSucesso menssagem="Conta Modificada com sucesso"></MenssagemSucesso> : ""}
         {!contaAtiva && <MenssagemExclusao></MenssagemExclusao>}
