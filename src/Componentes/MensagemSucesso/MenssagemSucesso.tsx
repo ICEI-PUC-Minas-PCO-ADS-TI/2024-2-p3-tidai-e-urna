@@ -11,7 +11,7 @@ export default function MenssagemSucesso({ menssagem }: { menssagem: string }) {
               <Text fontSize="md" fontWeight="medium" _dark={{
                 color: "coolGray.800"
               }}>
-                Menssagem!
+                Mensagem!
               </Text>
             </HStack>
             <IconButton variant="unstyled" _focus={{

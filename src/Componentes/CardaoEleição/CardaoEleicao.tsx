@@ -10,7 +10,7 @@ interface CardaoEleicaoProps {
   dataVencimento: string;
   status: string;
   disabled: boolean;
-  vencedor: string
+  color: string
 }
 
 const imagemPathPuc = require("../../assets/puc.jpg");
@@ -54,7 +54,7 @@ export function Example({
   id,
   dataVencimento,
   status,
-  disabled,
+  color
 
 }: CardaoEleicaoProps) {
   const navigation = useNavigation();
@@ -63,13 +63,12 @@ export function Example({
     navigation.navigate("Pleito", { id });
   }
   return (
-    <Pressable disabled={disabled} onPress={() => goToPleito(id)}>
-      <Box borderBottomLeftRadius={40} bg={"blue.400"} p={3} flexDir={"row"} w={"100%"} mt={2}>
+    <Pressable onPress={() => goToPleito(id)}>
+      <Box borderBottomLeftRadius={40} bg={color ? color : "blue.400"} p={3} flexDir={"row"} w={"100%"} mt={2}>
         <Box w={"70%"} >
-          <Text fontSize={20} color={"white"}>{nomeCurso}</Text>
-          <Text>{periodoCurso}</Text>
-          <Text>{"Data vencimento:" + " " + dataVencimento}</Text>
-          <Text>{"Situação" + " " + status}</Text>
+          <Text fontWeight={"bold"} fontSize={20} color={"white"}>{nomeCurso}</Text>
+          <Text fontWeight={"bold"} fontSize={15}>{"Data vencimento:" + " " + dataVencimento}</Text>
+          <Text fontWeight={"bold"} >{"Situação" + " " + status}</Text>
         </Box>
         <Box w={"30%"} alignItems={"flex-end"}>< Avatar w={20} h={20} source={imagemPathPuc}></Avatar></Box>
       </Box>

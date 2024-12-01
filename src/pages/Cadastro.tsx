@@ -80,7 +80,7 @@ export function Cadastro({ navigation }: Props) {
 
     if (response) {
       setShowLoading(false)
-      navigation.navigate("Login")
+      navigation.navigate("CadastroSucess")
     } else {
       setShowLoading(false)
     }

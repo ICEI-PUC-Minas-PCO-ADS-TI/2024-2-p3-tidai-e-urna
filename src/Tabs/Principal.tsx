@@ -1,17 +1,12 @@
 import ImagemFundo from "@/components/ImagemDeFundo/ImagemFundo";
 import axios, { AxiosResponse } from "axios";
-import { ScrollView, VStack } from "native-base";
+import { Box, Button, ScrollView, VStack } from "native-base";
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from "react-native";
 import { Example } from "../Componentes/CardaoEleição/CardaoEleicao";
 
 
-interface IVencedor {
-  nomePleito: string;
-  candidatoNome: string;
-  totalVotos: string;
-  votosPleito: string;
-}
+
 interface Candidato {
   id: number;
   nome: string;
@@ -31,7 +26,8 @@ export interface IPleito {
 
 export default function Principal() {
   const [pleitos, setPleitos] = useState<IPleito[]>([]);
-  const [vencedor, setVencedor] = useState<IVencedor[]>([]);
+  const [pleitosFiltrados, setPleitoFiltrado] = useState<IPleito[]>([])
+  const [colorPleito, setColorPleito] = useState<string>("")
 
   useEffect(() => {
     const fetchPleitos = async () => {
@@ -66,47 +62,35 @@ export default function Principal() {
     return () => clearInterval(intervalId); // Limpa o intervalo ao desmontar o componente
   }, []);
 
-
-  // const fetchVencedorPleito = async (id: number) => {
-  //   const url = `https://e-urna-back.onrender.com/pleito/ganhadorPleito/${id}`
-
-  //   try {
-  //     const response: AxiosResponse<IVencedor> = await axios.get(url);
-  //     console.log('Requisição feita com sucesso', response.data);
-  //     if (response.data.candidatoNome != null) {
-  //       console.log("Ok")
-  //       setVencedor((prevVencedores) => [...prevVencedores, response.data]);
-  //     }
-  //   } catch (error) {
-  //     if (axios.isAxiosError(error)) {
-  //       console.error('Erro de Axios:', error.message);
-  //       if (error.response) {
-  //         console.error('Status:', error.response.status);
-  //         console.error('Dados:', error.response.data);
-  //       } else if (error.request) {
-  //         console.error('Erro de requisição:', error.request);
-  //       }
-  //     } else {
-  //       console.error('Erro não relacionado ao Axios:', error);
-  //     }
-  //   }
-  // };
-
-  // for (let i = 0; i < pleitos.length; i++) {
-  //   fetchVencedorPleito(Number(pleitos[i].id))
-  // }
   const converterData = (data: any) => {
     const dataVencimento = new Date(data);
     const dataFormatada = dataVencimento.toLocaleDateString('pt-BR');
     return dataFormatada;
   }
 
+  const filtrarPleitos = ({ status, color }: { status: string, color: string }) => {
+    if (status !== "TODOS") {
+      const resultado = pleitos.filter((pleito) => pleito.status.includes(status))
+      setPleitoFiltrado(resultado)
+      setColorPleito(color)
+      console.log("Entrei", pleitosFiltrados)
+    } else {
+      setPleitoFiltrado([])
+      setColorPleito(color)
+    }
+  }
+
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <ImagemFundo>
         <VStack flex={1} w={"100%"}>
-          {Array.isArray(pleitos) && pleitos.map((pleito, index) => (
-
+          <Box w={"100%"} justifyContent={"space-between"} flexDir={"row"}>
+            <Button onPress={() => filtrarPleitos({ status: "ATIVO", color: "green.400" })} bg={"green.400"} w={"30%"}>ATIVOS</Button>
+            <Button onPress={() => filtrarPleitos({ status: "ENCERRADO", color: "red.600" })} bg={"red.600"} w={"30%"}>ENCERRADOS</Button>
+            <Button onPress={() => filtrarPleitos({ status: "TODOS", color: "blue.400" })} bg={"blue.400"} w={"30%"}>TODOS</Button>
+          </Box>
+          {pleitosFiltrados.length > 0 ? pleitosFiltrados.map((pleito, index) => (
             <Example
               key={pleito.id}
               id={pleito.id}
@@ -114,14 +98,24 @@ export default function Principal() {
               nomeCurso={pleito.nomePleito}
               periodoCurso={pleito.nomePleito}
               status={pleito.status}
-              vencedor={vencedor && vencedor.length > index && vencedor[index] && vencedor[index].candidatoNome != null ? vencedor[index].candidatoNome : "Não tem candidato"}
-              // vencedor="Ok"
-              disabled={pleito.status === 'ENCERRADO'} // Define se estará desabilitado ou não
-            />
-          ))}
+              color={colorPleito}
+            ></Example>
+          )) :
+            pleitos.map((pleito, index) => (
+
+              <Example
+                key={pleito.id}
+                id={pleito.id}
+                dataVencimento={converterData(pleito.data_termino)}
+                nomeCurso={pleito.nomePleito}
+                periodoCurso={pleito.nomePleito}
+                status={pleito.status}
+                color={colorPleito}
+              />
+            ))}
         </VStack>
       </ImagemFundo>
-    </ScrollView>
+    </ScrollView >
   );
 }
 

@@ -9,14 +9,13 @@ import {
   Select,
   VStack
 } from "native-base";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Botao } from "../Componentes/Botao/Botao";
 import BoxCampForm from "../Componentes/BoxCampForm/BoxCampForm";
 import { EntradaDeTexto } from "../Componentes/EntradaDeTexto/EntradaDeTexto";
 import IconLoading from "../Componentes/IconLoading/IconLoading";
 import { Titulo } from "../Componentes/Titulo/Titulo";
-import { IPleito } from "../Tabs/Principal";
 import { yupCadastroCandidato } from "../utils/Yups";
 
 export interface IUsuarioVoAll {
@@ -24,7 +23,7 @@ export interface IUsuarioVoAll {
   id: number,
   curso: string,
   setEmail: string,
-  setTipoUsuarioEnum: string
+  tipoUsuarioEnum: string
 }
 interface IPLeito_Id_Candidato {
   id: number
@@ -39,7 +38,9 @@ interface ICadastroPleito {
 
 interface IPleito {
   id: number,
-  nomePleito: string
+  nomePleito: string,
+  status: string
+
 }
 
 
@@ -47,28 +48,22 @@ export default function CadastroCandidato() {
   const [usuarios, setUsuarios] = useState<IUsuarioVoAll[]>();
   const [pleitos, setPleitos] = useState<IPleito[]>();
   const navigation = useNavigation();
-  const [refresh, setRefresh] = useState(false);
   const [showLoading, setShowLoading] = useState<boolean>(false)
 
 
 
+  const fetchUsuarios = async () => {
+    const url = "https://e-urna-back.onrender.com/usuario/usuarioAll";
+    try {
+      const response: AxiosResponse<IUsuarioVoAll[]> = await axios.get(url);
+      console.log('Requisição feita com sucesso UsuarioAll:');
+      const result = response.data.filter((dat) => dat.tipoUsuarioEnum.includes("ALUNO"))
+      receiveData(result, "usuario");
+    } catch (error) {
+      console.error('Erro em fetchUsuarios:', error);
+    }
+  };
 
-  useEffect(() => {
-    const fetchUsuarios = async () => {
-      const url = "https://e-urna-back.onrender.com/usuario/usuarioAll";
-      try {
-        const response: AxiosResponse<IUsuarioVoAll[]> = await axios.get(url);
-        console.log('Requisição feita com sucesso UsuarioAll:');
-        receiveData(response.data, "usuario");
-      } catch (error) {
-        console.error('Erro em fetchUsuarios:', error);
-      }
-    };
-
-    console.log('useEffect fetchUsuarios iniciado');
-    fetchUsuarios();
-  }, [refresh]);
-  const forceRefresh = () => setRefresh(!refresh);
 
   const setSucessCadastroCandidato = () => {
     setTimeout(() => {
@@ -81,7 +76,8 @@ export default function CadastroCandidato() {
     try {
       const response: AxiosResponse<IPleito[]> = await axios.get(url);
       console.log('Requisição feita com sucesso PleitoAll:');
-      receiveData(response.data, "pleito");
+      const result = response.data.filter((dat) => dat.status.includes("ATIVO"))
+      receiveData(result, "pleito");
     } catch (error) {
       console.error('Erro em fetchPleito:', error);
     }
@@ -106,7 +102,6 @@ export default function CadastroCandidato() {
       console.log('Cadastro bem-sucedido:', response.data);
       setShowLoading(true)
       setSucessCadastroCandidato()
-      forceRefresh()
       return true;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -182,6 +177,7 @@ export default function CadastroCandidato() {
                     accessibilityLabel="Choose Service"
                     placeholder="Selecione um candidato "
                     selectedValue={values.nomeCandidato}
+                    onOpen={fetchUsuarios}
                     _selectedItem={{
                       bg: "teal.600",
                       endIcon: <CheckIcon size="5" />,
@@ -205,6 +201,7 @@ export default function CadastroCandidato() {
                       bg={"white"}
                       accessibilityLabel="Choose Service"
                       placeholder="Pleito"
+                      onOpen={fetchPleito}
                       _selectedItem={{
                         bg: "teal.600",
                         endIcon: <CheckIcon size="5" />,

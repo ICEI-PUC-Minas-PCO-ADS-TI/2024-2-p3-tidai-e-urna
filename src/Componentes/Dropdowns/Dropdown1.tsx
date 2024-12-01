@@ -60,6 +60,7 @@ export default function Dropdown({ nomeBotao, opcoesInputs }: DropdownPros) {
           {opcoesInputs &&
             opcoesInputs.map((opcao) => (
               <Actionsheet.Item
+                key={opcao.nome}
                 onPress={() => modificarPage(opcao.navigation)}
               >
                 <Text>{opcao.nome}</Text>
