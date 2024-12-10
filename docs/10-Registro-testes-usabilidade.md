@@ -6,7 +6,7 @@
 
 ## Fazer Cadastro do candidato
 
-![Fazer Cadastro candidato](images_testes/Caso_De_Teste_Cadastro_Usuario.png)
+![Fazer Cadastro candidato](images_testes/Caso_De_Teste_Cadastro_Candidato.png.png)
 
 ## Buscar pleito
 
