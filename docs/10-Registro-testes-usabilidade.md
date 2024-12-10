@@ -1,8 +1,31 @@
 # Registro de testes de usabilidade
 
-<span style="color:red">Pré-requisitos: <a href="04-Projeto-interface.md"> Projeto de interface</a></span>, <a href="09-Plano-testes-usabilidade.md"> Plano de testes de usabilidade</a>
+## Fazer Cadastro
 
-Após realizar os testes de usabilidade, obtém-se um relatório a partir das análises realizadas. O registro de testes de usabilidade é um relatório que contém as evidências dos testes e os relatos dos usuários participantes, baseado no <a href="09-Plano-testes-usabilidade.md"> Plano de testes de usabilidade</a> desenvolvido para os casos de uso desta etapa.
+![Fazer Cadastro usuario](images_testes/Caso_De_Teste_Cadastro_Usuario.png)
 
-> **Links úteis**:
-> - [Ferramentas de testes de usabilidade](https://www.usability.gov/how-to-and-tools/resources/templates.html)
+## Fazer Cadastro do candidato
+
+![Fazer Cadastro candidato](images_testes/Caso_De_Teste_Cadastro_Usuario.png)
+
+## Buscar pleito
+
+![Buscar Pleito](images_testes/Caso_De_Teste_Buscar_Pleito.png)
+
+## Criar pleito
+
+![Criar pleito](images_testes/Caso_De_Teste_Criando_Pleito.png)
+
+## Fazer edição pleito
+
+![Edição pleito](images_testes/Caso_De_Teste_Fazendo_Edicao_Pleito.png)
+
+## Cadastrar Voto
+
+![Cadastrar Voto](images_testes/Caso_de_teste_VOTO.png)
+
+## Editar perfil
+
+![Edição perfil](images_testes/.png)
+
+
